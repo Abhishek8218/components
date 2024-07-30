@@ -83,8 +83,8 @@ const closeModal = () => {
 
 
     return (
-        <div className="px-[10vw]">
-      <div className="main relative h-[600px] w-[600px]   border-4 border-[#E76F23] mx-auto mt-[60px] bg-[#FDC477] ">
+        <div className="">
+      <div className="main relative h-[600px] w-[600px]   border-4 border-[#E76F23] mx-auto mt-[40px] bg-[#FDC477] ">
         <div className=" h-[422px] w-[423px] border-4 border-solid border-[#E76F23] transform rotate-45 ml-[83px] mt-[84px]"></div>
         <div className=" h-[10px] w-[841px] border-b-4 border-[#E76F23] transform rotate-[135deg] mt-[-212px] ml-[-123px]"></div>
         <div className=" h-[10px] w-[842px] border-t-4 border-[#E76F23] transform -rotate-[135deg] ml-[-122px] mt-[-15px]"></div>
