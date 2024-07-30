@@ -22,9 +22,14 @@ const Home= () => {
     fetchData();
   }, []);
 
+  // const updateHouse = (index: number, updatedHouse: House) => {
+  //   const newHouses = [...houses];
+  //   newHouses[index] = updatedHouse;
+  //   setHouses(newHouses);
+  // };
   return (
-    <div>
-      <Chart houses={houses} />
+    <div className="">
+      <Chart houses={houses}/>
     </div>
   );
 };
