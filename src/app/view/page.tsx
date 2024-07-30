@@ -43,8 +43,8 @@ const Page = () => {
         <h2 className='text-4xl font-semibold font-serif text-center mt-5'>Astrologer - <span className='text-[#E76F23]'>Bheem Singh</span></h2>
       </div>
       <p className='font-semibold font-serif text-end mr-20 -mt-5 underline'>Date: {currentDate}</p>
-      <div className=' flex flex-col sm:flex-row justify-center items-center gap-4 md:gap-40 py-10   sm:px-0'>
-        <div className='flex flex-col w-full sm:w-auto p-10'>
+      <div className=' flex flex-col sm:flex-row justify-center items-center gap-2 md:gap-40 py-10   sm:px-0'>
+        <div className='flex flex-col justify-center items-center md:justify-start md:items-start w-full sm:w-auto py-5 px-10'>
           <label htmlFor='dob' className='text-lg font-semibold mb-2 '>Date of Birth</label>
           <input 
             type='date' 
@@ -52,7 +52,7 @@ const Page = () => {
             className='p-3 rounded-lg border-[1px] border-gray-400 text-black select-none w-[250px]'
           />
         </div>
-        <div className='flex flex-col w-full sm:w-auto p-10'>
+        <div className='flex flex-col justify-center items-center md:justify-start md:items-start w-full sm:w-auto p-10'>
           <label htmlFor='time' className='text-lg font-semibold mb-2'>Birth Time</label>
           <input 
             type='time' 
@@ -60,7 +60,7 @@ const Page = () => {
             className='p-3 rounded-lg border-[1px] border-gray-400 text-black select-none w-[250px]'
           />
         </div>
-        <div className='flex flex-col w-full sm:w-auto p-10'>
+        <div className='flex flex-col justify-center items-center md:justify-start md:items-start w-full sm:w-auto p-10'>
           <label htmlFor='place' className='text-lg font-semibold mb-2'>Birth Place</label>
           <input 
             type='text' 
