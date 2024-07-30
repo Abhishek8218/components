@@ -1,0 +1,15 @@
+[
+    { "title": "House 1", "specialty": "Ascendant/Lagna" },
+    { "title": "House 2", "specialty": "Family" },
+    { "title": "House 3", "specialty": "Sibilings" },
+    { "title": "House 4", "specialty": "Mother" },
+    { "title": "House 5", "specialty": "Children" },
+    { "title": "House 6", "specialty": "Disease" },
+    { "title": "House 7", "specialty": "Spouse" },
+    { "title": "House 8", "specialty": "Longevity" },
+    { "title": "House 9", "specialty": "Guru Father" },
+    { "title": "House 10", "specialty": "Wishes" },
+    { "title": "House 11", "specialty": "Status" },
+    { "title": "House 12", "specialty": "Losses" }
+  ]
+  
