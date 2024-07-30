@@ -32,12 +32,12 @@ const Page = () => {
 
   return (
     <div className='text-white select-none' >
-      <div className='w-full h-16 flex flex-row justify-between px-10 py-4 border-b-[2px] border-b-gray-700 text-white ' >
+      <div className='w-full h-16 flex flex-col sm:flex-row  justify-between px-10 py-4 border-b-[2px] border-b-gray-700 text-white ' >
         <p className='font-semibold font-mono'> GST No.: n378eahe73ssqw2</p>
         <p className='font-semibold font-mono hidden sm:block'>1-Page</p>
         <a href='mailto:exmaple@gmail.com' className='font-semibold font-mono'>Exampl@gmail.com</a>
       </div>
-      <div className='py-20'>
+      <div className='py-20 px-3'>
         <h1 className='text-7xl font-semibold font-serif  text-center text-[#E76F23]'>Astro Sarthee</h1>
         <p className='text-lg font-semibold font-sans text-center mt-2'>Guide for Your Important Things of Life</p>
         <h2 className='text-4xl font-semibold font-serif text-center mt-5'>Astrologer - <span className='text-[#E76F23]'>Bheem Singh</span></h2>
@@ -52,7 +52,7 @@ const Page = () => {
             className='p-3 rounded-lg border-[1px] border-gray-400 text-black select-none w-[250px]'
           />
         </div>
-        <div className='flex flex-col justify-center items-center md:justify-start md:items-start w-full sm:w-auto p-10'>
+        <div className='flex flex-col justify-center items-center md:justify-start md:items-start w-full sm:w-auto py-5 px-10'>
           <label htmlFor='time' className='text-lg font-semibold mb-2'>Birth Time</label>
           <input 
             type='time' 
@@ -60,7 +60,7 @@ const Page = () => {
             className='p-3 rounded-lg border-[1px] border-gray-400 text-black select-none w-[250px]'
           />
         </div>
-        <div className='flex flex-col justify-center items-center md:justify-start md:items-start w-full sm:w-auto p-10'>
+        <div className='flex flex-col justify-center items-center md:justify-start md:items-start w-full sm:w-auto py-5 px-10'>
           <label htmlFor='place' className='text-lg font-semibold mb-2'>Birth Place</label>
           <input 
             type='text' 
