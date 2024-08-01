@@ -11,8 +11,8 @@ const Picker = () => {
 
     const initialPosition: [number, number] = [30.3223292765723, 78.0467597766522];
     const zoomFeatures = {
-       minZoom:  16,
-      zoom : 18,
+       minZoom:  20,
+      zoom : 20,
        maxZoom:  22,
        zoomControl : false,
     }
