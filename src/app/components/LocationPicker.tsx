@@ -1,5 +1,5 @@
 // components/LocationPicker.tsx
-'use client;'
+'use client'
 import React, { useState, useEffect,} from 'react';
 import { MapContainer, TileLayer, useMapEvents, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
