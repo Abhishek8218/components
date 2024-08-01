@@ -9,7 +9,7 @@ const LocationPicker = dynamic(() => import('../components/LocationPicker'), {
 });
 
 const Picker = () => {
-  const [userPosition, setUserPosition] = useState<[number, number]>([0, 0]);
+  const [userPosition, setUserPosition] = useState<[number, number]>([28.644800,77.216721]);
   const [fetchLocation, setFetchLocation] = useState(false);
 
   useEffect(() => {
