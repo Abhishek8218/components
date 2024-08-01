@@ -23,10 +23,14 @@ const LocationPicker = dynamic(() => import('./components/LocationPicker'), {
 const Home = () => {
   const [houses, setHouses] = useState<House[]>([]);
   const initialPosition: [number, number] = [30.3223292765723, 78.0467597766522];
-  const minZoom = 16;
-  const zoom = 18;
-  const maxZoom = 20;
-  const zoomControl = false;
+  const zoomFeatures = {
+     minZoom:  16,
+    zoom : 18,
+     maxZoom:  20,
+     zoomControl : false,
+  }
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,10 +55,7 @@ const Home = () => {
       </Head>
       <LocationPicker
         initialPosition={initialPosition}
-        minZoom={minZoom}
-        zoom={zoom}
-        maxZoom={maxZoom}
-        zoomControl={zoomControl}
+        zoomFeatures={zoomFeatures}
       >
         <div>
           <input placeholder="search.." className="p-3" />

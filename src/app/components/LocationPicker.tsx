@@ -8,17 +8,25 @@ import { MaterialSymbol } from 'react-material-symbols';
 import 'leaflet/dist/leaflet.css'
 
 
+interface ZoomFeatures {
+  minZoom: number;
+  zoom: number;
+  maxZoom: number;
+  zoomControl: boolean;
+}
+
 interface LocationPickerProps {
   initialPosition: [number, number];
-  minZoom?: number;
-  zoom: number;
-  maxZoom?: number;
-  zoomControl: boolean;
+  
+  zoomFeatures: ZoomFeatures;
   children?: React.ReactNode;
 }
 
-const LocationPicker = ({ initialPosition, minZoom, zoom, maxZoom, zoomControl, children }: LocationPickerProps) => {
+const LocationPicker = ({ initialPosition, children,zoomFeatures }: LocationPickerProps) => {
   const [position, setPosition] = useState<[number, number]>(initialPosition);
+
+
+const { minZoom, zoom, maxZoom, zoomControl} = zoomFeatures;
 
 //   useEffect(() => {
 //     import('leaflet/dist/leaflet.css');
