@@ -28,7 +28,7 @@ const Home = () => {
   const zoomFeatures = {
      minZoom:  16,
     zoom : 18,
-     maxZoom:  18,
+     maxZoom:  22,
      zoomControl : false,
   }
 
