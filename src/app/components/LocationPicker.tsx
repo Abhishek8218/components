@@ -3,10 +3,10 @@
 
   
 import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
+import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet';
 import { MaterialSymbol } from 'react-material-symbols';
 import 'leaflet/dist/leaflet.css'
-
+import L from 'leaflet';
 
 interface ZoomFeatures {
   minZoom: number;
@@ -21,18 +21,23 @@ interface LocationPickerProps {
   zoomFeatures: ZoomFeatures;
   markerIcon: React.ReactNode;
   children?: React.ReactNode;
+  userPosition?: [number, number];
+  userLocationIconUrl: string;
+  handleLocationSearch: Function;
 }
 
-const LocationPicker = ({ initialPosition, children,zoomFeatures,markerIcon }: LocationPickerProps) => {
+
+
+
+
+const LocationPicker = ({ initialPosition, children,zoomFeatures,markerIcon,userPosition,userLocationIconUrl,handleLocationSearch}: LocationPickerProps) => {
   const [position, setPosition] = useState<[number, number]>(initialPosition);
 
 
 const { minZoom, zoom, maxZoom, zoomControl} = zoomFeatures;
 
-//   useEffect(() => {
-//     import('leaflet/dist/leaflet.css');
-//   }, []);
 
+// Map events
   const MapEvents = () => {
     useMapEvents({
       moveend: (event) => {
@@ -48,6 +53,24 @@ const { minZoom, zoom, maxZoom, zoomControl} = zoomFeatures;
     console.log('Current position:', position);
   }, [position]);
 
+
+
+
+  // Create custom icon for user location
+const createCustomIcon = (color: string) => {
+    return new L.DivIcon({
+      html: `<div style="background-color: ${color}; width: 24px; height: 24px; border-radius: 50%; border: 4px solid white;"></div>`,
+      iconSize: [24, 24],
+      className: '',
+    });
+  };
+
+  const userLocationIcon = createCustomIcon('#0e4ce9');
+
+  const handleRecenter = () => {
+    setPosition([userPosition?.[0] ?? 0, userPosition?.[1] ?? 0]);//ToDo: FIx this to recenter the map
+  }
+  
   return (
     
     <div className="relative h-screen w-screen">
@@ -69,10 +92,24 @@ const { minZoom, zoom, maxZoom, zoomControl} = zoomFeatures;
         maxZoom={22}
         
         />
+
+{userPosition && (
+          <Marker position={userPosition} icon={userLocationIcon}/>
+        
+        )}
         <MapEvents />
         <div className="absolute top-1/2 left-1/2 w-8 h-10 transform -translate-x-1/2 -translate-y-full z-[999]">
 {markerIcon}
         </div >
+
+        <div>
+        <MaterialSymbol  icon="my_location" size={32}  fill
+          grade={-25}
+        onClick={handleRecenter}
+          className='absolute bottom-10 right-10 z-[999]'
+    />
+
+        </div>
      
       </MapContainer>
     </div>

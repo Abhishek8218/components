@@ -65,7 +65,7 @@ const Home = () => {
     <div className="flex flex-col justify-center items-center gap-16">
       <Rating stars={1} onRated={handleRated} />
       <CartCounter maxValue={10} minValue={0} />
-      <Head>
+      {/* <Head>
         <title>Location Picker</title>
       </Head>
       <LocationPicker
@@ -76,7 +76,7 @@ const Home = () => {
         <div>
           <input placeholder="search.." className="p-3" />
         </div>
-      </LocationPicker>
+      </LocationPicker> */}
     </div>
   );
 };
