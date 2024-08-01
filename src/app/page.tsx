@@ -6,6 +6,8 @@ import { lazy, useEffect, useState } from 'react';
 import Head from 'next/head';
 import Rating from './components/Rating';
 import CartCounter from './components/CartCounter';
+import { marker } from 'leaflet';
+import { MaterialSymbol } from 'react-material-symbols';
 
 
 
@@ -26,10 +28,20 @@ const Home = () => {
   const zoomFeatures = {
      minZoom:  16,
     zoom : 18,
-     maxZoom:  20,
+     maxZoom:  18,
      zoomControl : false,
   }
 
+ const  markerIcon = (
+  <MaterialSymbol
+  icon="location_on"
+  size={32}
+  fill
+  grade={-25}
+  color="black"
+  
+/>
+ );
 
 
   useEffect(() => {
@@ -46,6 +58,9 @@ const Home = () => {
     console.log(`The new rating is: ${newRating}`);
   };
 
+
+
+
   return (
     <div className="flex flex-col justify-center items-center gap-16">
       <Rating stars={1} onRated={handleRated} />
@@ -56,6 +71,7 @@ const Home = () => {
       <LocationPicker
         initialPosition={initialPosition}
         zoomFeatures={zoomFeatures}
+        markerIcon={markerIcon}
       >
         <div>
           <input placeholder="search.." className="p-3" />

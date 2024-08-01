@@ -19,10 +19,11 @@ interface LocationPickerProps {
   initialPosition: [number, number];
   
   zoomFeatures: ZoomFeatures;
+  markerIcon: React.ReactNode;
   children?: React.ReactNode;
 }
 
-const LocationPicker = ({ initialPosition, children,zoomFeatures }: LocationPickerProps) => {
+const LocationPicker = ({ initialPosition, children,zoomFeatures,markerIcon }: LocationPickerProps) => {
   const [position, setPosition] = useState<[number, number]>(initialPosition);
 
 
@@ -57,6 +58,7 @@ const { minZoom, zoom, maxZoom, zoomControl} = zoomFeatures;
         center={position}
         minZoom={minZoom}
         zoom={zoom}
+
         maxZoom={maxZoom}
         zoomControl={zoomControl}
         className="h-full w-full"
@@ -65,14 +67,10 @@ const { minZoom, zoom, maxZoom, zoomControl} = zoomFeatures;
           url="https://api.mapbox.com/styles/v1/upaharhousenepal/cl1tf387y004214mvfq2utlaw/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoidXBhaGFyaG91c2VuZXBhbCIsImEiOiJjbDAycmttNG4xNnE5M2Nwa3VvbmczdjgxIn0.8DwZzdG46rwqvzrYVcUI4g"
         />
         <MapEvents />
-        <MaterialSymbol
-          icon="location_on"
-          size={32}
-          fill
-          grade={-25}
-          color="black"
-          className="absolute top-1/2 left-1/2 w-8 h-10 transform -translate-x-1/2 -translate-y-full z-[999]"
-        />
+        <div className="absolute top-1/2 left-1/2 w-8 h-10 transform -translate-x-1/2 -translate-y-full z-[999]">
+{markerIcon}
+        </div >
+     
       </MapContainer>
     </div>
   );
