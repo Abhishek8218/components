@@ -48,8 +48,11 @@ const LocationPicker = ({
     const map = useMap();
     useEffect(() => {
       if (fetchLocation && !hasFlownToUser) {
+
         console.log('Flying to user position:', userPosition);
         map.flyTo(userPosition, zoom);
+        setPosition(userPosition);
+        
         setHasFlownToUser(true);
       }
     }, [fetchLocation, hasFlownToUser, userPosition, map, zoom]);
@@ -57,8 +60,7 @@ const LocationPicker = ({
     return null;
   };
 
-
-
+console.log("user position", position);
 
 
 
@@ -71,9 +73,9 @@ const LocationPicker = ({
       },
     });
 
- 
+ console.log('position in map events:', position);
 
-      console.log('userPosition in map events:', userPosition);
+      //console.log('userPosition in map events:', userPosition);
     
     return null;
   };
@@ -90,7 +92,7 @@ const LocationPicker = ({
     return new L.DivIcon({
       html: `  <div style="position: relative; width: 24px; height: 24px;">
           <div class="ping"></div>
-          <div style="background-color: ${color}; width: 24px; height: 24px; border-radius: 50%; border: 4px solid white;"></div>
+          <div style="background-color: ${color}; width: 24px; height: 24px;margin-top:-12px; border-radius: 50%; border: 2px solid white;"></div>
         </div>`,
       iconSize: [24, 24],
       className: '',
@@ -122,18 +124,18 @@ const LocationPicker = ({
 
         {userPosition && <Marker position={userPosition} icon={userLocationIcon} />}
         <MapEvents />
-        <UserLocation/>
-        <div className="absolute top-1/2 left-1/2 w-8 h-10 transform -translate-x-1/2 -translate-y-full z-[999]">
+        <UserLocation/> 
+        <div className="absolute top-1/2 left-1/2  w-8 h-10 transform -translate-x-1/2 -translate-y-full z-[999]">
           {markerIcon}
         </div>
 
         <MaterialSymbol
           icon="my_location"
-          size={32}
+          size={40}
           fill
           grade={-25}
        onClick={() => {setHasFlownToUser(false)}}
-          className="absolute bottom-20 right-10 z-[999]"
+          className="absolute bottom-20 right-10 z-[999] hover:scale-150 cursor-pointer transition-all ease-in-out duration-500"
         />
       </MapContainer>
     </div>
