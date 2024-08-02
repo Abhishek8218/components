@@ -78,7 +78,7 @@ const Page = () => {
         </div>
 
         <hr className='border-b-2 border-[#ff883e] mt-6 print:mt-2 w-full' />
-
+<div className='xl:flex xl:flex-col xl:justify-start xl:items-start print:flex-none '>
         <div className='text-left text-gray-600 font-semibold mt-8 text-[17px] px-10 md:pl-[200px] space-y-4'>
           {profile ? (
             <>
@@ -95,7 +95,7 @@ const Page = () => {
           )}
         </div>
 
-        <div className='flex flex-col print:flex-col md:flex-row justify-center items-center md:gap-6 print:mt-[650px] xl:ml-[-20px]'>
+        <div className='flex flex-col print:flex-col md:flex-row justify-center items-center md:gap-6 print:mt-[650px] xl:ml-[-20px] lg:pl-[220px] '>
           <div>
             <h1 className='text-xl font-bold text-center md:text-left mt-5 print:mt-0'>Lagna Chakra</h1>
             {error ? (
@@ -125,6 +125,7 @@ const Page = () => {
           ) : (
             <div className='text-gray-600 text-center mt-4'>No blog information available.</div>
           )}
+        </div>
         </div>
       </div>
     </div>

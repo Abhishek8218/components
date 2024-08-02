@@ -72,7 +72,7 @@ const LocationPicker = ({
     });
 
  
-    //   map.setView(userPosition);
+
       console.log('userPosition in map events:', userPosition);
     
     return null;
@@ -88,16 +88,17 @@ const LocationPicker = ({
   // Create custom icon for user location
   const createCustomIcon = (color: string) => {
     return new L.DivIcon({
-      html: `<div style="background-color: ${color}; width: 24px; height: 24px; border-radius: 50%; border: 4px solid white;"></div>`,
+      html: `  <div style="position: relative; width: 24px; height: 24px;">
+          <div class="ping"></div>
+          <div style="background-color: ${color}; width: 24px; height: 24px; border-radius: 50%; border: 4px solid white;"></div>
+        </div>`,
       iconSize: [24, 24],
       className: '',
     });
   };
+  const userLocationIcon = createCustomIcon('#318CE7');
 
-  const userLocationIcon = createCustomIcon('#0e4ce9');
-
-    // const map = useMap();
-    // map.flyTo(userPosition, zoom);
+    
 
 
   return (
