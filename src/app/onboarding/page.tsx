@@ -3,7 +3,12 @@
 import React, { useEffect, useState } from 'react';
 import Chart from '../components/chart';
 import { fetchHouses, fetchProfile, fetchBlog, House, BlogInfo, Profile } from '../components/fetchData';
-import Tour from 'reactour';
+import dynamic from 'next/dynamic';
+
+// Dynamically import the Tour component with SSR disabled
+const Tour = dynamic(() => import('reactour'), {
+  ssr: false,
+});
 
 const steps = [
   {
@@ -175,16 +180,16 @@ const Page = () => {
           Start Tour
         </button>
 
-        <Tour
-          steps={steps}
-          isOpen={isTourOpen}
-          onRequestClose={() => setIsTourOpen(false)}
-         
-        />
+        {typeof window !== 'undefined' && (
+          <Tour
+            steps={steps}
+            isOpen={isTourOpen}
+            onRequestClose={() => setIsTourOpen(false)}
+          />
+        )}
       </div>
     </div>
   );
 };
 
 export default Page;
-
