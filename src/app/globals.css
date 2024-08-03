@@ -32,3 +32,30 @@
     background: rgba(14, 76, 233, 0.5);
     animation: ping 1s infinite;
   }
+
+
+
+  .reactour__popover {
+    background-color: #f0f0f0; /* Light gray background for tooltip */
+    border: 2px solid #007bff; /* Blue border to highlight active element */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .reactour__close-button {
+    color: #007bff; /* Blue color for close button */
+  }
+  
+  .reactour__helper {
+    border-radius: 10px;
+  }
+  
+  .reactour__controls button {
+    background-color: #007bff; /* Blue background for primary buttons */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+  
