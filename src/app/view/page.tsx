@@ -58,21 +58,13 @@ const Page = () => {
 
   return (
     <div className='w-full flex justify-center items-center overflow-hidden'>
-      <div className='w-full sm:w-[98%] xl:w-[80%] md:border-[3px] md:border-[#ff883e] print:border-none select-none py-0 print:pt-[200px] md:py-6'>
-        <div className='w-full flex justify-center items-center mt-5'>
-          <Image src='/ganesh.png' width={60} height={60} alt='logo' className='bg-white' />
-        </div>
-
-        <div className='flex flex-col justify-center gap-2 mt-10 items-center text-left'>
-          <p className='text-sm font-semibold'>GST No.: 19AABCU9602F1ZU</p>
-          <a href='mailto:example@gmail.com' className='text-sm font-semibold'>example@gmail.com</a>
-        </div>
-
+      <div className='w-full sm:w-[98%] xl:w-[80%] md:border-[3px] md:border-[#ff883e] print:border-none select-none py-0  md:py-6 print:py-8'>
         <div>
-          <h1 className='text-7xl text-center mt-5 print:mt-0'>LOGO</h1>
-          <h1 className='text-3xl font-bold text-center mt-5 print:mt-0 text-[#E76F23]'>Astro Sarthee</h1>
-          <p className='text-center text-base font-semibold mt-3'>Guide for Your Important Things in Life</p>
-          <h2 className='text-center text-2xl font-semibold mt-3'>
+          <div className='w-full flex justify-center items-center'><h1 className='text-4xl text-center mt-3 print:mt-0 w-[150px]'>LOGO</h1></div>
+          
+          <h1 className='text-3xl font-bold text-center mt-3 print:mt-0 text-[#E76F23]'>Astro Sarthee</h1>
+          <p className='text-center text-sm font-semibold '>Guide for Your Important Things in Life</p>
+          <h2 className='text-center text-xl font-semibold mt-3'>
             Astrologer - <span className='text-[#E76F23]'>Bheem Singh</span>
           </h2>
         </div>
@@ -83,29 +75,42 @@ const Page = () => {
           {profile ? (
             <>
               <p>Date: <span className='font-medium text-[17px] text-gray-900'>{currentDate}</span></p>
-              <p>Name: <span className='font-medium text-[17px] text-gray-900'>{profile.fullName}</span></p>
+            <div className='flex flex-col print:flex-row print:gap-[10rem] md:flex-row justify-start items-start md:gap-[12.5rem]'>
+              <div >
+              <p>Name: <span className='font-medium text-[17px] text-gray-900 mt-14'>{profile.fullName}</span></p>
               <p>Gender: <span className='font-medium text-[17px] text-gray-900'>{profile.gender}</span></p>
               <p>Date of Birth: <span className='font-medium text-[17px] text-gray-900'>{profile.dob}</span></p>
+              <p>Nakshatra: <span className='font-medium text-[17px] text-gray-900'>{profile.Nakshatra}</span></p>
+              <p>Nakshatra Lord: <span className='font-medium text-[17px] text-gray-900'>{profile.NakshatraLord}</span></p>
+              <p>Chandra Rasi: <span className='font-medium text-[17px] text-gray-900'>{profile.ChandraRasi}</span></p>
+              <p>Chandra Rasi Lord: <span className='font-medium text-[17px] text-gray-900'>{profile.ChandraRasiLord}</span></p>
+              </div>
+              <div>
               <p>Day of Birth: <span className='font-medium text-[17px] text-gray-900'>{profile.day}</span></p>
               <p>Time of Birth: <span className='font-medium text-[17px] text-gray-900'>{profile.timeOfBirth}</span></p>
               <p>City: <span className='font-medium text-[17px] text-gray-900'>{profile.city}</span></p>
+              <p>Zodiac Sign: <span className='font-medium text-[17px] text-gray-900'>{profile.ZodiacSign}</span></p>
+              <p>Deity: <span className='font-medium text-[17px] text-gray-900'>{profile.Deity}</span></p>
+              <p>Ganam: <span className='font-medium text-[17px] text-gray-900'>{profile.Ganam}</span></p>
+              </div>
+              </div>
             </>
           ) : (
             <div className='text-red-600'>Failed to load profile information.</div>
           )}
         </div>
 
-        <div className='flex flex-col print:flex-col md:flex-row justify-center items-center md:gap-6 print:mt-[650px] xl:ml-[-20px] lg:pl-[220px] '>
-          <div>
-            <h1 className='text-xl font-bold text-center md:text-left mt-5 print:mt-0'>Lagna Chakra</h1>
+        <div className='flex flex-col print:flex-row  md:flex-row justify-center items-center print:gap-2 print:ml-0 md:gap-6  xl:ml-[-20px] lg:pl-[220px] '>
+          <div className=''>
+            <h1 className='text-xl font-bold text-center print:text-left print:ml-6  md:text-left mt-5 print:mt-5'>Lagna Chakra</h1>
             {error ? (
-              <div className='text-red-600 text-center mt-4'>{error}</div>
+              <div className='text-red-600 text-center mt-4 '>{error}</div>
             ) : (
               <Chart houses={houses} onChakraClick={handleChakraClick} view={view} />
             )}
           </div>
           <div>
-            <h1 className='text-xl font-bold text-center md:text-left mt-5'>Chandra Chakra</h1>
+            <h1 className='text-xl font-bold text-center print:text-left print:mr-2 md:text-left mt-5'>Chandra Chakra</h1>
             {error ? (
               <div className='text-red-600 text-center mt-4'>{error}</div>
             ) : (
@@ -114,7 +119,7 @@ const Page = () => {
           </div>
         </div>
 
-        <div className='mt-8 px-10 md:px-[200px] print:mt-[100px]'>
+        <div className='mt-8 px-10 md:px-[200px] print:mt-[200px] print:py-10'>
           {blogInfo.length > 0 ? (
             blogInfo.map((info, index) => (
               <div key={index} className='mb-6'>

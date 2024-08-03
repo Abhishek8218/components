@@ -23,6 +23,13 @@ export interface House {
     city: string;
     fullLatitude: string;
     fullLongitude: string;
+    Nakshatra: string;
+    NakshatraLord: string;
+    ChandraRasi: string;
+    ChandraRasiLord: string;
+    ZodiacSign: string;
+    Deity: string;
+    Ganam: string;
   }
   
   export const fetchHouses = async (): Promise<House[]> => {

@@ -8,6 +8,14 @@
     "dob": "16-07-1990",
     "day": "Monday",
     "timeOfBirth": "15:44",
-    "city": "Dehradun, Uttarakhand, India"
+    "city": "Dehradun, Uttarakhand, India",
+    "Nakshatra": "Pushya",
+    "NakshatraLord": "Shani (Saturn)",
+    "ChandraRasi":  "Karka",
+    "ChandraRasiLord": "Chandra",
+    "ZodiacSign": "Leo",
+    "Deity": "Brihaspati (Jupiter)",
+    "Ganam": "Deva"
+
     
   }

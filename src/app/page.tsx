@@ -3,13 +3,17 @@
 
 import dynamic from 'next/dynamic';
 import { lazy, useEffect, useState } from 'react';
-import Head from 'next/head';
 import Rating from './components/Rating';
 import CartCounter from './components/CartCounter';
 import { marker } from 'leaflet';
 import { MaterialSymbol } from 'react-material-symbols';
+import ReactForm from './components/ReactForm';
 
-
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from '@tanstack/react-query'
 
 
 export interface House {
@@ -21,6 +25,7 @@ export interface House {
 const LocationPicker = dynamic(() => import('./components/LocationPicker'), {
   ssr: false,
 });
+
 
 const Home = () => {
   const [houses, setHouses] = useState<House[]>([]);
@@ -57,26 +62,28 @@ const Home = () => {
   const handleRated = (newRating: number) => {
     console.log(`The new rating is: ${newRating}`);
   };
-
-
+  const fetchFromLocalStorage = async () => {
+    const data = JSON.parse(localStorage.getItem('formData') || '[]');
+    return data;
+  };
+  const { data, isLoading, isError } = useQuery({queryKey:['formData'], queryFn: fetchFromLocalStorage});
 
 
   return (
     <div className="flex flex-col justify-center items-center gap-16">
       <Rating stars={1} onRated={handleRated} />
       <CartCounter maxValue={10} minValue={0} />
-      {/* <Head>
-        <title>Location Picker</title>
-      </Head>
-      <LocationPicker
-        initialPosition={initialPosition}
-        zoomFeatures={zoomFeatures}
-        markerIcon={markerIcon}
-      >
-        <div>
-          <input placeholder="search.." className="p-3" />
+      {data?.map((formData: any, index: number) => (
+        <div key={index} className="p-4 border rounded-md shadow-sm">
+          <h3 className="text-xl font-bold">{formData?.firstName} {formData?.lastName}</h3>
+          <p>Email: {formData?.email}</p>
         </div>
-      </LocationPicker> */}
+      ))}
+      <ReactForm/>
+
+ 
+
+     {/* <Query/> */}
     </div>
   );
 };
