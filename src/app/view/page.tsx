@@ -69,6 +69,7 @@ const Page = () => {
           </h2>
         </div>
 
+
         <hr className='border-b-2 border-[#ff883e] mt-6 print:mt-2 w-full' />
 <div className='xl:flex xl:flex-col xl:justify-start xl:items-start print:flex-none '>
         <div className='text-left text-gray-600 font-semibold mt-8 text-[17px] px-10 md:pl-[200px] space-y-4'>
@@ -76,7 +77,7 @@ const Page = () => {
             <>
               <p>Date: <span className='font-medium text-[17px] text-gray-900'>{currentDate}</span></p>
             <div className='flex flex-col print:flex-row print:gap-[10rem] md:flex-row justify-start items-start md:gap-[12.5rem]'>
-              <div >
+              <div  className='flex flex-col gap-2'>
               <p>Name: <span className='font-medium text-[17px] text-gray-900 mt-14'>{profile.fullName}</span></p>
               <p>Gender: <span className='font-medium text-[17px] text-gray-900'>{profile.gender}</span></p>
               <p>Date of Birth: <span className='font-medium text-[17px] text-gray-900'>{profile.dob}</span></p>
@@ -85,7 +86,7 @@ const Page = () => {
               <p>Chandra Rasi: <span className='font-medium text-[17px] text-gray-900'>{profile.ChandraRasi}</span></p>
               <p>Chandra Rasi Lord: <span className='font-medium text-[17px] text-gray-900'>{profile.ChandraRasiLord}</span></p>
               </div>
-              <div>
+              <div className='flex flex-col gap-2'>
               <p>Day of Birth: <span className='font-medium text-[17px] text-gray-900'>{profile.day}</span></p>
               <p>Time of Birth: <span className='font-medium text-[17px] text-gray-900'>{profile.timeOfBirth}</span></p>
               <p>City: <span className='font-medium text-[17px] text-gray-900'>{profile.city}</span></p>
