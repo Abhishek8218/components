@@ -114,7 +114,7 @@ const SearchBar = forwardRef<SearchBarHandle, SearchBarProps>(
         />
         {error && <div className="text-sm text-red-500 mt-1">{error}</div>}
         {showSuggestions && (
-          <ul className="absolute max-h-[300px] overflow-y-scroll overflow-x-hidden w-[350p] mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
+          <ul className="absolute max-h-[300px] overflow-y-scroll overflow-x-hidden w-[350px] mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
             {filteredSuggestions.length > 0 ? (
               filteredSuggestions.map((suggestion, index) => (
                 <li
