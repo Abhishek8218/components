@@ -1,6 +1,7 @@
 import React from 'react';
 import { DAYS, MONTH_NAMES } from '../../DatePicker/constants';
 import { MaterialSymbol } from 'react-material-symbols';
+import { format } from 'date-fns';
 
 interface DateModalProps {
     month: number;
@@ -57,12 +58,16 @@ interface DateModalProps {
     };
 
 
+    // const formatDate = (date: Date | null) => {
+    //     if (!date) return '';
+    //     const day = String(date.getDate()).padStart(2, '0');
+    //     const month = String(date.getMonth() + 1).padStart(2, '0');
+    //     const year = date.getFullYear();
+    //     return `${day}-${month}-${year}`;
+    // };
     const formatDate = (date: Date | null) => {
         if (!date) return '';
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const year = date.getFullYear();
-        return `${day}-${month}-${year}`;
+        return format(date, 'dd-MM-yyyy');
     };
   
     console.log("start date is ",startDate);

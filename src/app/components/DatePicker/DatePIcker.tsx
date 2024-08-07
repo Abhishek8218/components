@@ -8,6 +8,12 @@ import MobileDateModal from './Android/DateModal';
 import MobileMonthModal from './Android/MonthModal';
 import MobileYearModal from './Android/YearModal';
 
+
+
+
+interface DatesByMonth {
+  [key: number]: number[];
+}
 const DatePicker = () => {
   const [showDatepicker, setShowDatepicker] = useState(false);
   const [showMonthModal, setShowMonthModal] = useState(false);
@@ -19,9 +25,36 @@ const DatePicker = () => {
   const [blankDays, setBlankDays] = useState<number[]>([]);
   const [selectedDate, setSelectedDate] = useState<number>(new Date().getDate());
   const isToday = (date: number) => new Date().toDateString() === new Date(year, month, date).toDateString();
-  const isBanned = (date: number) => date % 5 === 0;
-  const isImportant = (date: number) => date % 7 === 0;
+  
+
+
+  // Banned and important dates mapped by month (0-based index for months)
+const bannedDatesByMonth:DatesByMonth = {
+  0: [2, 5, 7, 8], // January
+  7: [2, 4, 5, 7], // February
+  // Add more months here
+};
+
+const importantDatesByMonth:DatesByMonth = {
+  0: [1, 10, 15], // January
+  7: [3, 12, 18], // February
+  // Add more months here
+};
  
+
+
+const isBanned = (date: number) => {
+  const bannedDates = bannedDatesByMonth[month] || [];
+  return bannedDates.includes(date);
+};
+
+const isImportant = (date: number) => {
+  const importantDates = importantDatesByMonth[month] || [];
+  return importantDates.includes(date);
+};
+
+
+
   useEffect(() => {
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const dayOfWeek = new Date(year, month).getDay();
@@ -51,7 +84,7 @@ const DatePicker = () => {
 
   const handleDateClick = (date: number) => {
     if (!isBanned(date)) {
-        console.log("selected ",date);
+      console.log("selected ", date);
       setSelectedDate(date);
       getDateValue(date);
     }

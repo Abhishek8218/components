@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DateModal from './Desktop/DateModal';
 // import { DAYS, MONTH_NAMES } from 's';
-
+import { format } from 'date-fns';
 const DateRangePicker = () => {
     const [month, setMonth] = useState(new Date().getMonth());
     const [year, setYear] = useState(new Date().getFullYear());
