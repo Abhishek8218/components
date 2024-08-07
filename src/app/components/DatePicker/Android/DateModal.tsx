@@ -146,7 +146,7 @@ const MobileDateModal= ({
           ))}
         </div>
         <div className='flex justify-center border-t border-gray-100 w-full'>
-          <button className='text-blue-500' onClick={setCurrentDay}>Set Today's Day</button>
+          <button className='text-blue-500' onClick={setCurrentDay}>Set Today&apos;s Day</button>
         </div>
       </div>
     </div>
