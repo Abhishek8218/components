@@ -9,12 +9,12 @@ interface MonthModalProps {
   handleMonthModalClose: () => void;
 }
 
-const MonthModal: React.FC<MonthModalProps> = ({
+const MonthModal = ({
   month,
   showMonthModal,
   handleMonthSelect,
   handleMonthModalClose
-}) => (
+}:MonthModalProps) => (
   <div className={` inset-0 flex items-center justify-center max-w-[272px] max-h-[270px]  ml-4 mt-2 ${showMonthModal ? '' : 'hidden'}`}>
     <div className="inset-0  bg-opacity-50" onClick={handleMonthModalClose}></div>
     <div className="bg-white rounded-lg min-w-[272px] h-[270px] p-4 relative">

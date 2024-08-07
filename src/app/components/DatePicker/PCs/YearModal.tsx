@@ -8,12 +8,12 @@ interface YearModalProps {
   handleYearModalClose: () => void;
 }
 
-const YearModal: React.FC<YearModalProps> = ({
+const YearModal= ({
   year,
   showYearModal,
   handleYearSelect,
   handleYearModalClose
-}) => {
+}:YearModalProps) => {
   const yearModalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

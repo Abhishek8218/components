@@ -7,17 +7,21 @@ interface MobileMonthModalProps {
   showMonthModal: boolean;
   handleMonthSelect: (selectedMonth: number) => void;
   handleMonthModalClose: () => void;
+  setCurrentMonth: () => void;
 }
 
-const MobileMonthModal: React.FC<MobileMonthModalProps> = ({
+const MobileMonthModal= ({
   month,
   showMonthModal,
   handleMonthSelect,
-  handleMonthModalClose
-}) => (
+  handleMonthModalClose,
+  setCurrentMonth
+}:MobileMonthModalProps) => (
   <div className={`fixed inset-0 flex items-center justify-center z-50 px-10 ${showMonthModal ? '' : 'hidden'}`}>
     <div className="fixed inset-0 bg-opacity-60"></div> 
-    <div className="bg-white rounded-lg p-4 relative z-10  min-w-[50vw] w-[80vw] max-w-md min-h-[50vh] max-h-[80vh]">
+    <div className="bg-white rounded-lg shadow p-4 relative z-1  w-[354px] h-[528px] min-h-[528px] min-w-[354px] max-h-[528px] max-w-[354px]">
+
+        <div className=''>
       <button
         type="button"
         className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 transition ease-in-out duration-150"
@@ -28,7 +32,7 @@ const MobileMonthModal: React.FC<MobileMonthModalProps> = ({
       <div className='w-full flex flex-row flex-nowrap justify-between mb-4'>
         <h3 className="text-lg font-bold text-gray-800">Select Month</h3>
       </div>
-      <div className="grid grid-cols-2 gap-8 overflow-y-scroll max-h-[calc(80vh-80px)]  justify-center items-center text-center">
+      <div className="grid grid-cols-2 gap-8 mt-10 overflow-y-scroll max-h-[calc(80vh-80px)] min-h-[375px]  justify-center items-center text-center">
         {MONTH_NAMES.map((monthName, index) => (
           <p
             key={index}
@@ -42,6 +46,10 @@ const MobileMonthModal: React.FC<MobileMonthModalProps> = ({
           </p>
         ))}
       </div>
+      <div className='flex justify-center border-t border-gray-100 w-full mt-5'>
+<button className='text-blue-500  pt-2' onClick={setCurrentMonth}>Set Current Month</button>
+      </div>
+    </div>
     </div>
   </div>
 );

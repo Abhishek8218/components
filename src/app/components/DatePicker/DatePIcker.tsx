@@ -17,11 +17,11 @@ const DatePicker = () => {
   const [year, setYear] = useState<number>(new Date().getFullYear());
   const [noOfDays, setNoOfDays] = useState<number[]>([]);
   const [blankDays, setBlankDays] = useState<number[]>([]);
-
+  const [selectedDate, setSelectedDate] = useState<number>(new Date().getDate());
   const isToday = (date: number) => new Date().toDateString() === new Date(year, month, date).toDateString();
   const isBanned = (date: number) => date % 5 === 0;
   const isImportant = (date: number) => date % 7 === 0;
-
+ 
   useEffect(() => {
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const dayOfWeek = new Date(year, month).getDay();
@@ -47,7 +47,16 @@ const DatePicker = () => {
     return `${day}-${month}-${year}`;
   };
 
+  
 
+  const handleDateClick = (date: number) => {
+    if (!isBanned(date)) {
+        console.log("selected ",date);
+      setSelectedDate(date);
+      getDateValue(date);
+    }
+  };
+console.log("selected date is  ",selectedDate);
 
 
   const getDateValue = (day: number) => {
@@ -95,6 +104,45 @@ const DatePicker = () => {
     setShowMonthModal(false);
   };
 
+
+
+
+  // Function to set the current date
+  const setCurrentDay = () => {
+    const today = new Date();
+    setDate(formatDate(today));
+    setSelectedDate(today.getDate());
+   
+  };
+
+  // Function to set the current month
+  const setCurrentMonth = () => {
+    setMonth(new Date().getMonth());
+  };
+
+  // Function to set the current year
+  const setCurrentYear = () => {
+    setYear(new Date().getFullYear());
+  };
+
+
+
+
+
+
+  useEffect(() => {
+
+
+      
+    if ( isMobile && (showDatepicker || showYearModal || showMonthModal)) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+  
+  }, [showDatepicker, showYearModal, showMonthModal]);
+
+
 // Function to check if the device is mobile
   const useUserAgent = () => {
     const [userAgent, setUserAgent] = useState('');
@@ -116,70 +164,6 @@ const DatePicker = () => {
 
 
   return (
-    // <div className="w-[20rem] mx-auto">
-    //   <div className="relative">
-    //     <input
-    //       type="text"
-    //       readOnly
-    //       className="w-[270px] pl-4 pr-10 py-3 leading-none rounded-lg bg-gray-100 shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium"
-
-    //       placeholder="Select date"
-    //       value={date}
-    //       onClick={() => setShowDatepicker(!showDatepicker)}
-    //     />
-    //     <MaterialSymbol
-    //       icon="calendar_today"
-    //       fill
-    //       size={32}
-    //       color="gray"
-    //       className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
-    //       onClick={() => setShowDatepicker(!showDatepicker)}
-    //     />
-    //     {showDatepicker && (
-    //      isMobile ? <MobileDateModal month={month}
-    //      year={year}
-    //      blankDays={blankDays}
-    //      noOfDays={noOfDays}
-    //      getDateValue={getDateValue}
-    //      isToday={isToday}
-    //      isBanned={isBanned}
-    //      isImportant={isImportant}
-    //      setMonth={setMonth}
-    //      setYear={setYear}
-    //      handleMonthModal={handleMonthModal}
-    //      handleYearModal={handleYearModal} /> : <DateModal
-    //         month={month}
-    //         year={year}
-    //         blankDays={blankDays}
-    //         noOfDays={noOfDays}
-    //         getDateValue={getDateValue}
-    //         isToday={isToday}
-    //         isBanned={isBanned}
-    //         isImportant={isImportant}
-    //         setMonth={setMonth}
-    //         setYear={setYear}
-    //         handleMonthModal={handleMonthModal}
-    //         handleYearModal={handleYearModal}
-    //       />
-    //     )}
-    //     {showMonthModal && (
-    //       <MonthModal
-    //         month={month}
-    //         showMonthModal={showMonthModal}
-    //         handleMonthSelect={handleMonthSelect}
-    //         handleMonthModalClose={handleMonthModal}
-    //       />
-    //     )}
-    //     {showYearModal && (
-    //       <YearModal
-    //         year={year}
-    //         showYearModal={showYearModal}
-    //         handleYearSelect={handleYearSelect}
-    //         handleYearModalClose={handleYearModalClose}
-    //       />
-    //     )}
-    //   </div>
-    // </div>
     <div className="relative">
       { (showDatepicker || showYearModal || showMonthModal) && (
         <div
@@ -237,7 +221,12 @@ const DatePicker = () => {
          setYear={setYear}
          handleMonthModal={handleMonthModal}        
          handleYearModal={handleYearModal}
-         handleDatePickerClose= {() => setShowDatepicker(false)} /> : <DateModal
+         handleDatePickerClose= {() => setShowDatepicker(false)}
+          setCurrentDay={setCurrentDay} 
+          handleDateClick={handleDateClick}
+          SelectedDate={selectedDate} />
+         :
+           <DateModal
             month={month}
             year={year}
             blankDays={blankDays}
@@ -256,7 +245,9 @@ const DatePicker = () => {
           isMobile ? <MobileMonthModal   month={month}
           showMonthModal={showMonthModal}
           handleMonthSelect={handleMonthSelect}
-          handleMonthModalClose={handleMonthModalClose}/> : 
+          handleMonthModalClose={handleMonthModalClose}
+          setCurrentMonth={setCurrentMonth}
+          /> : 
           <MonthModal
             month={month}
             showMonthModal={showMonthModal}
@@ -268,7 +259,8 @@ const DatePicker = () => {
           isMobile ? <MobileYearModal   year={year}
           showYearModal={showYearModal}
           handleYearSelect={handleYearSelect}
-          handleYearModalClose={handleYearModalClose}/> :
+          handleYearModalClose={handleYearModalClose} 
+          setCurrentYear={setCurrentYear}/> :
           <YearModal
             year={year}
             showYearModal={showYearModal}

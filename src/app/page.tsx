@@ -18,7 +18,7 @@ import SearchBar from './components/AutoSuggest';
 import ForwardedTextInput from './components/Input';
 import Input from './components/Input';
 import DatePicker from './components/DatePicker/DatePIcker';
-import TimePicker from './components/TimePicker';
+import TimePicker from './components/TimePicker/TimePicker';
 
 
 export interface House {

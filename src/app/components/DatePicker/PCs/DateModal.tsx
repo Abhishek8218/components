@@ -16,7 +16,7 @@ interface DateModalProps {
   handleYearModal: () => void;
 }
 
-const DateModal: React.FC<DateModalProps> = ({
+const DateModal = ({
   month,
   year,
   blankDays,
@@ -29,7 +29,7 @@ const DateModal: React.FC<DateModalProps> = ({
   setYear,
   handleMonthModal,
   handleYearModal
-}) => (
+}:DateModalProps) => (
   <div className="bg-white mt-12 rounded-lg shadow p-4 absolute top-0 left-0" style={{ width: '17rem' }}>
     <div className="flex justify-between items-center mb-2">
       <div>
