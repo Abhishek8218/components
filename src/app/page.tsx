@@ -17,7 +17,7 @@ import {
 import SearchBar from './components/AutoSuggest';
 import ForwardedTextInput from './components/Input';
 import Input from './components/Input';
-import DatePicker from './components/DatePIcker';
+import DatePicker from './components/DatePicker/DatePIcker';
 import TimePicker from './components/TimePicker';
 
 
@@ -140,8 +140,7 @@ const Home = () => {
   const userAgent = useUserAgent();
 
   const isMobile = /Mobi|Android/i.test(userAgent);
-  const isChrome = /Chrome/.test(userAgent);
-  const isSafari = /Safari/.test(userAgent) && !/Chrome/.test(userAgent);
+
 
   return (
     <div className="flex flex-col justify-center items-center gap-16">
@@ -168,8 +167,7 @@ const Home = () => {
     <p>You are using a desktop device</p>
   )}
 
-  {isChrome && <p>You are using Chrome</p>}
-  {isSafari && <p>You are using Safari</p>}
+ 
 
   {/* Render different components based on user agent */}
 
