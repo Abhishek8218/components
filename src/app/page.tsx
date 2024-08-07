@@ -19,6 +19,7 @@ import ForwardedTextInput from './components/Input';
 import Input from './components/Input';
 import DatePicker from './components/DatePicker/DatePIcker';
 import TimePicker from './components/TimePicker/TimePicker';
+import DateRangePicker from './components/DateRangeSelector/RangeSelector';
 
 
 export interface House {
@@ -158,6 +159,7 @@ const Home = () => {
       <DatePicker/>
 
 <TimePicker/>
+<DateRangePicker/>
 
 
 <div>

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { DAYS, MONTH_NAMES } from '../constants';
 import { MaterialSymbol } from 'react-material-symbols';
 
+
+
 interface MobileDateModalProps {
   month: number;
   year: number;
@@ -43,7 +45,7 @@ const MobileDateModal= ({
 
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 px-10">
+    <div className="fixed bottom-0 inset-0 flex items-center justify-center z-50 px-10">
       <div className="fixed inset-0 bg-gray-6 bg-opacity-80"></div>
       <div className="bg-white rounded-lg shadow p-4 relative z-1 w-[354px] h-[528px] min-h-[528px] min-w-[354px] max-h-[528px] max-w-[354px]">
         <div className="flex justify-between items-center mb-2">
