@@ -14,6 +14,11 @@ import {
   QueryClientProvider,
   useQuery,
 } from '@tanstack/react-query'
+import SearchBar from './components/AutoSuggest';
+import ForwardedTextInput from './components/Input';
+import Input from './components/Input';
+import DatePicker from './components/DatePIcker';
+import TimePicker from './components/TimePicker';
 
 
 export interface House {
@@ -25,6 +30,47 @@ export interface House {
 const LocationPicker = dynamic(() => import('./components/LocationPicker'), {
   ssr: false,
 });
+const
+ suggestions = [
+  'Apple',
+  'Banana',
+  'Cherry',
+  'Date',
+  'Fig',
+  'Grape',
+  'Kiwi',
+  'Apple',
+  'Banana',
+  'Cherry',
+  'Date',
+  'Fig',
+  'Grape',
+  'Kiwi',
+  'Apple',
+  'Banana',
+  'Cherry',
+  'Date',
+  'Fig',
+  'Grape',
+  'Kiwi',
+  'Apple',
+  'Banana',
+  'Cherry',
+  'Date',
+  'Fig',
+  'Grape',
+  'apple book',
+  'Kiwi',
+  'Apple',
+  'Banana',
+  'Cherry',
+  'Date',
+  'Fig',
+  'Grape',
+  'Kiwi',
+  
+  
+];
 
 
 const Home = () => {
@@ -49,6 +95,9 @@ const Home = () => {
  );
 
 
+
+
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch('/houses.json');
@@ -69,6 +118,31 @@ const Home = () => {
   const { data, isLoading, isError } = useQuery({queryKey:['formData'], queryFn: fetchFromLocalStorage});
 
 
+
+  const [selectedValue, setSelectedValue] = useState<string>('');
+
+  const handleSelect = (value: string) => {
+    setSelectedValue(value);
+  };
+
+
+
+  const useUserAgent = () => {
+    const [userAgent, setUserAgent] = useState('');
+  
+    useEffect(() => {
+      setUserAgent(navigator.userAgent);
+    }, []);
+  
+    return userAgent;
+  };
+
+  const userAgent = useUserAgent();
+
+  const isMobile = /Mobi|Android/i.test(userAgent);
+  const isChrome = /Chrome/.test(userAgent);
+  const isSafari = /Safari/.test(userAgent) && !/Chrome/.test(userAgent);
+
   return (
     <div className="flex flex-col justify-center items-center gap-16">
       <Rating stars={1} onRated={handleRated} />
@@ -78,11 +152,34 @@ const Home = () => {
           <h3 className="text-xl font-bold">{formData?.firstName} {formData?.lastName}</h3>
           <p>Email: {formData?.email}</p>
         </div>
-      ))}
+      ))} 
+      <SearchBar suggestions={suggestions} onSelect={handleSelect} />
+      <p className="mt-4">Selected: {selectedValue}</p>
+      <Input type='text' placeholder='Enter your name' onChange={(event) => console.log(event.target.value)} />
+      <DatePicker/>
+
+<TimePicker/>
+
+
+<div>
+  {isMobile ? (
+    <p>You are using a mobile device</p>
+  ) : (
+    <p>You are using a desktop device</p>
+  )}
+
+  {isChrome && <p>You are using Chrome</p>}
+  {isSafari && <p>You are using Safari</p>}
+
+  {/* Render different components based on user agent */}
+
+</div>
+
       <ReactForm/>
 
- 
 
+
+ 
      {/* <Query/> */}
     </div>
   );
