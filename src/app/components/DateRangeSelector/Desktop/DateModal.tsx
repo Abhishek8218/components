@@ -170,7 +170,7 @@ console.log("formatted end date is ",formatDate(end));
         </div>
         <div className="mt-4 flex justify-between items-center">
           <div className='text-center'>
-            <span className="font-semibold text-center">Start Date: </span><br/> {start ? (formatDate(start)) :  <span className="text-xs"><br/>End Date</span>}
+            <span className="font-semibold text-center">Start Date: </span><br/> {start ? (formatDate(start)) :  <span className="text-xs"><br/>Start Date</span>}
           </div>
           <div className='text-center'>
             <span className="font-semibold text-center">End Date:</span><br/> {end ? (formatDate(end)) : <span className="text-xs  line"><br/>End Date</span>}
