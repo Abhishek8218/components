@@ -36,7 +36,7 @@ interface IDateArranger{
 }
 
 
-const DateModal = ({
+const MobileDateModal = ({
     month,
     year,
     blankDays,
@@ -101,8 +101,10 @@ console.log("Final Start Date",startDate,"FInal End Date",endDate)
 
 
     return (
-        <div className="bg-white mt-12 rounded-lg shadow p-4 top-0 left-0" style={{ width: '17rem' }}>
-            <div className="flex justify-between items-center mb-2">
+<div className="fixed bottom-0 inset-0 flex items-center justify-center z-50 px-10">
+      <div className="fixed inset-0 bg-gray-6 bg-opacity-80"></div>
+      <div className="bg-white rounded-lg shadow p-4 relative z-1 w-[354px] h-[528px] min-h-[528px] min-w-[354px] max-h-[528px] max-w-[354px]">
+        <div className="flex justify-between items-center mb-2">
                 <div>
                     <span className="text-lg font-bold text-gray-800 cursor-pointer" onClick={handleMonthModal}>{MONTH_NAMES[month]}</span>
                     <span className="ml-1 text-lg text-gray-600 font-normal cursor-pointer" onClick={handleYearModal}>{year}</span>
@@ -169,14 +171,14 @@ console.log("Final Start Date",startDate,"FInal End Date",endDate)
                     </button>
                 </div>
             </div>
-            <div className="flex flex-wrap mb-3 -mx-1">
+            <div className="flex flex-wrap mb-8 -mx-1">
                 {DAYS.map((day, index) => (
                     <div key={index} className="px-1" style={{ width: '14.26%' }}>
                         <span className="text-gray-800 font-medium text-center text-xs">{day}</span>
                     </div>
                 ))}
             </div>
-            <div className="flex flex-wrap -mx-1">
+            <div className="flex flex-wrap -mx-1 gap-y-9 min-h-[375px]">
                 {blankDays.map((_, index) => (
                     <div key={index} className="text-center border p-1 border-transparent text-sm" style={{ width: '14.28%' }}></div>
                 ))}
@@ -218,7 +220,8 @@ console.log("Final Start Date",startDate,"FInal End Date",endDate)
                 </button>
             </div>
         </div>
+        </div>
     );
 };
 
-export default DateModal;
+export default MobileDateModal;
