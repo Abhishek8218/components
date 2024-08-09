@@ -171,14 +171,14 @@ console.log("Final Start Date",startDate,"FInal End Date",endDate)
                     </button>
                 </div>
             </div>
-            <div className="flex flex-wrap mb-8 -mx-1">
+            <div className="flex flex-wrap mb-4 -mx-1">
                 {DAYS.map((day, index) => (
                     <div key={index} className="px-1" style={{ width: '14.26%' }}>
                         <span className="text-gray-800 font-medium text-center text-xs">{day}</span>
                     </div>
                 ))}
             </div>
-            <div className="flex flex-wrap -mx-1 gap-y-9 min-h-[375px]">
+            <div className="flex flex-wrap -mx-1 min-h-[295px]">
                 {blankDays.map((_, index) => (
                     <div key={index} className="text-center border p-1 border-transparent text-sm" style={{ width: '14.28%' }}></div>
                 ))}
