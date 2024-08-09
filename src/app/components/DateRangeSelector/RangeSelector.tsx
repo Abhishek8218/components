@@ -4,15 +4,23 @@ import DateModal from './Desktop/DateModal';
 
 import { format, parse, isValid } from 'date-fns';
 import MobileDateModal from './mobile/mobileDateModal';
+import MonthModal from './Desktop/monthDateModal';
+import YearModal from './Desktop/yearDateModal';
+import MobileYearModal from './mobile/mobileYearModal';
+import MobileMonthModal from './mobile/mobileMonthModal';
 
 const DateRangePicker = () => {
-    const [month, setMonth] = useState(new Date().getMonth());
-    const [year, setYear] = useState(new Date().getFullYear());
+    // const [month, setMonth] = useState(new Date().getMonth());
+    // const [year, setYear] = useState(new Date().getFullYear());
+    const [month, setMonth] = useState<number>(new Date().getMonth());
+    const [year, setYear] = useState<number>(new Date().getFullYear());
     const [startDate, setStartDate] = useState<string | null>("");
     const [endDate, setEndDate] = useState<string | null>("");
     const [showDateModal, setShowDateModal] = useState<boolean>(false);
     const [isSelectingStartDate, setIsSelectingStartDate] = useState<boolean>(true);
-  
+    //const [showDatepicker, setShowDatepicker] = useState(false);
+    const [showMonthModal, setShowMonthModal] = useState(false);
+    const [showYearModal, setShowYearModal] = useState(false);
     const blankDays = Array(new Date(year, month, 1).getDay()).fill(null);
     const noOfDays = Array.from({ length: new Date(year, month + 1, 0).getDate() }, (_, i) => i + 1);
 
@@ -71,18 +79,113 @@ const DateRangePicker = () => {
         setEndDate(null);
         setIsSelectingStartDate(true);
     };
+
+    // const handleMonthSelect = (selectedMonth: number) => {
+    //     setMonth(selectedMonth);
+    //     setShowMonthModal(false);
+    //   };
   
     const handleInputClick = () => {
         setShowDateModal(true);
     };
   
-    const handleMonthModal = () => {
-        // Handle month modal logic if needed
-    };
+    // const handleMonthModal = () => {
+    //     // Handle month modal logic if needed
+    // };
   
-    const handleYearModal = () => {
-        // Handle year modal logic if needed
-    };
+    // const handleYearModal = () => {
+    //     // Handle year modal logic if needed
+    // };
+
+
+
+
+
+
+    // const getDateValue = (day: number) => {
+    //     const selectedDate = new Date(year, month, day);
+    //     const formattedDate = formatDate(selectedDate);
+    //     setDate(formattedDate);
+    //     setShowDateModal(false);
+    //   };
+    
+      const handleMonthModal = () => {
+        setShowMonthModal(true);
+        setShowDateModal(false);
+      };
+    
+    
+      const handleMonthModalClose = () => {
+        setShowMonthModal(false);
+        setShowDateModal(true);
+      };
+      const handleYearModal = () => {
+        setShowYearModal(true);
+        setShowDateModal(false);
+      };
+    
+      const handleMonthSelect = (selectedMonth: number) => {
+        setMonth(selectedMonth);
+        setShowDateModal(true);
+        setShowMonthModal(false);
+      };
+    
+      const handleYearSelect = (selectedYear: number) => {
+        setYear(selectedYear);
+        setShowDateModal(true);
+        setShowYearModal(false);
+      };
+    
+      const handleYearModalClose = () => {
+        setShowDateModal(true);
+        setShowYearModal(false);
+      }
+    
+    
+    
+      const closeModals = () => {
+        setShowDateModal(false);
+        setShowYearModal(false);
+        setShowMonthModal(false);
+      };
+    
+    
+    
+    
+      // Function to set the current date
+    //   const setCurrentDay = () => {
+    //     const today = new Date();
+    //     setDate(formatDate(today));
+    //     setSelectedDate(today.getDate());
+       
+    //   };
+    
+      // Function to set the current month
+      const setCurrentMonth = () => {
+        setMonth(new Date().getMonth());
+      };
+    
+      // Function to set the current year
+      const setCurrentYear = () => {
+        setYear(new Date().getFullYear());
+      };
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // const formatDisplayDate = (date: string | null) => {
     //     if (!date) return 'Date';
@@ -149,6 +252,35 @@ const DateRangePicker = () => {
                     setIsSelectingStartDate={setIsSelectingStartDate}
                 />
             )}
+            {showMonthModal && (
+          isMobile ? <MobileMonthModal   month={month}
+          showMonthModal={showMonthModal}
+          handleMonthSelect={handleMonthSelect}
+          handleMonthModalClose={handleMonthModalClose}
+          setCurrentMonth={setCurrentMonth}
+          /> : 
+          <MonthModal
+            month={month}
+            showMonthModal={showMonthModal}
+            handleMonthSelect={handleMonthSelect}
+            handleMonthModalClose={handleMonthModalClose}
+          />
+        )}
+          {showYearModal && (
+          isMobile ? <MobileYearModal 
+            year={year}
+          showYearModal={showYearModal}
+          handleYearSelect={handleYearSelect}
+          handleYearModalClose={handleYearModalClose} 
+          setCurrentYear={setCurrentYear}/> :
+          <YearModal
+            year={year}
+            showYearModal={showYearModal}
+            handleYearSelect={handleYearSelect}
+            handleYearModalClose={handleYearModalClose}
+          />
+        )}
+
         </div>
     );
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import { DAYS, MONTH_NAMES } from '../../DatePicker/constants';
 import { MaterialSymbol } from 'react-material-symbols';
 import { format, isAfter, isBefore, isValid } from 'date-fns';
+import { copyFileSync } from 'fs';
 
 interface DateModalProps {
     month: number;
@@ -92,6 +93,27 @@ const DateModal = ({
             }
         }
     };
+
+
+    const isStartEndDate = (date: number) => {
+      if (startDate || endDate) {
+        // Parse the start and end dates into Date objects
+        const [startDay, startMonth, startYear] = startDate.split('-').map(Number);
+        const [endDay, endMonth, endYear] = endDate.split('-').map(Number);
+    
+        const parsedStartDate = new Date(startYear, startMonth - 1, startDay);
+        const parsedEndDate = new Date(endYear, endMonth - 1, endDay);
+        const currentDate = new Date(year, month, date);
+    
+        // Compare the current date with the parsed start and end dates
+        const isStart = currentDate.getTime() === parsedStartDate.getTime();
+        const isEnd = currentDate.getTime() === parsedEndDate.getTime();
+    
+        return isStart || isEnd;
+      }
+      return false;
+    };
+    
 
     React.useEffect(() => {
         DateArranger({endDate, startDate, setStartDate,setEndDate,setIsSelectingStartDate});
@@ -186,10 +208,22 @@ console.log("Final Start Date",startDate,"FInal End Date",endDate)
                         className="px-1 mb-1"
                         style={{ width: '14.28%' }}
                     >
-                        <div
-                            onClick={() => handleDateClick(date)}
-                            className={`cursor-pointer text-center text-sm l rounded-full leading-loose transition ease-in-out duration-100 ${isDateInRange(date) && startDate ? 'bg-blue-200' : isToday(date) ? 'bg-blue-500 text-white' : isBanned(date) ? 'bg-gray-400 text-white cursor-not-allowed' : isImportant(date) ? 'bg-green-300 text-gray-700' : 'text-gray-700 hover:bg-blue-200'}`}
-                        >
+                     <div
+              onClick={() => handleDateClick(date)}
+              className={`cursor-pointer text-center text-sm rounded-full leading-loose transition ease-in-out duration-100 ${
+                isStartEndDate(date)
+                  ? 'bg-blue-700 text-white' // Highlight start date with darker color
+                  : isDateInRange(date)
+                  ? 'bg-blue-200' // Highlight dates in range
+                  : isToday(date)
+                  ? 'bg-blue-500 text-white' // Highlight today
+                  : isBanned(date)
+                  ? 'bg-gray-400 text-white cursor-not-allowed' // Highlight banned dates
+                  : isImportant(date)
+                  ? 'bg-green-300 text-gray-700' // Highlight important dates
+                  : 'text-gray-700 hover:bg-blue-200' // Default date styling
+              }`}
+            >
                             {date}
                         </div>
                     </div>
