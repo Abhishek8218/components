@@ -20,6 +20,7 @@ import Input from './components/Input';
 import DatePicker from './components/DatePicker/DatePIcker';
 import TimePicker from './components/TimePicker/TimePicker';
 import DateRangePicker from './components/DateRangeSelector/RangeSelector';
+import EventCalendar from './components/eventCalendar/eventCalendar';
 
 
 export interface House {
@@ -162,6 +163,7 @@ const Home = () => {
 <DateRangePicker/>
 
 
+
 <div>
   {isMobile ? (
     <p>You are using a mobile device</p>
@@ -174,7 +176,7 @@ const Home = () => {
   {/* Render different components based on user agent */}
 
 </div>
-
+ <EventCalendar/>
       <ReactForm/>
 
 
