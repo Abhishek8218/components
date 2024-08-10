@@ -1,0 +1,47 @@
+{
+    "agendas": [
+      {
+        "date": "9-8-24",
+        "agendas": [
+          { "title": "Meeting with John", "time": "10:00" },
+          { "title": "Lunch with client", "time": "12:30" },
+          { "title": "Project deadline", "time": "End of day" },
+          { "title": "Prepare presentation", "time": "15:00" }
+        ]
+      },
+      {
+        "date": "10-8-24",
+        "agendas": [
+          { "title": "Project deadline", "time": "End of day" },
+          { "title": "Prepare presentation", "time": "15:00" }
+        ]
+      },
+      {
+        "date": "11-8-24",
+        "agendas": [
+          { "title": "Client presentation", "time": "11:00" }
+        ]
+      },
+      {
+        "date": "12-8-24",
+        "agendas": [
+          { "title": "Review feedback", "time": "16:00" },
+          { "title": "Team building activity", "time": "14:00" }
+        ]
+      },
+      {
+        "date": "13-8-24",
+        "agendas": [
+          { "title": "Weekly review", "time": "09:00" }
+        ]
+      },
+      {
+        "date": "14-8-24",
+        "agendas": [
+          { "title": "Company event", "time": "18:00" },
+          { "title": "Networking session", "time": "20:00" }
+        ]
+      }
+    ]
+  }
+  

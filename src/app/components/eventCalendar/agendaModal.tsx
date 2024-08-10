@@ -32,7 +32,7 @@ const AgendaModal: React.FC<AgendaModalProps> = ({ selectedDate, getAgendasForDa
     });
 
     return (
-        <div className="inset-0 flex flex-col items-center justify-center z-50">
+        <div className="inset-0 flex flex-col items-center justify-center z-50 mt-1" >
                 <h3 className="font-medium text-base mb-2 bg-gray-100 rounded p-2 w-full border-y border-gray-400 text-center">
                   {format(selectedDate, 'MMMM dd, yyyy')}
                 </h3>
@@ -45,7 +45,7 @@ const AgendaModal: React.FC<AgendaModalProps> = ({ selectedDate, getAgendasForDa
                                 className="h-16  border-b border-gray-200 rounded px-2 flex flex-row justify-between items-center"
                             >
                                 <div className="font-medium text-sm">{agenda.title}</div>
-                                {agenda.time && <div className="text-gray-600 text-sm">{agenda.time}</div>}
+                                {agenda.time && <div className="text-gray-600 text-sm"> {agenda.time}</div>}
                             </div>
                         ))
                     ) : (

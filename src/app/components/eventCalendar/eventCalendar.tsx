@@ -1,75 +1,113 @@
-import React, { useState, useEffect } from 'react';
-import WeekDateModal from './desktop/weekCalendar'; // Ensure you have this modal component
-import AgendaModal from './agendaModal'; // Import the new agenda modal component
-import { format, startOfWeek, addWeeks, subWeeks, isToday } from 'date-fns';
+import React, { useState, useRef, useEffect } from 'react';
+import { format, startOfWeek, addDays, addWeeks, subWeeks, isToday, parse } from 'date-fns';
+import AgendaModal from './agendaModal'; // Importing the AgendaModal component
 
 type AgendaItem = {
     date: Date;
-    agendas: { title: string; time?: string, isAllDay?: boolean; }[];
+    agendas: { title: string; time?: string; isAllDay?: boolean }[];
 };
 
 const EventCalendar = () => {
+    const [currentWeekStart, setCurrentWeekStart] = useState<Date>(startOfWeek(new Date()));
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-    const [weekStartDate, setWeekStartDate] = useState<Date>(startOfWeek(new Date()));
+    const scrollRef = useRef<HTMLDivElement>(null);
 
-    // Sample demo agenda items around August 10, 2024
-    const demoAgendas: AgendaItem[] = [
-        { date: new Date(2024, 7, 9), agendas: [
-            { title: 'Meeting with John', time: '10:00 AM' },
-            { title: 'Lunch with client', time: '12:30 PM' },
-            { title: 'Project deadline', time: 'End of day' },
-            { title: 'Prepare presentation', time: '3:00 PM', isAllDay: true }
-        ]},
-        { date: new Date(2024, 7, 10), agendas: [
-            { title: 'Project deadline', time: 'End of day' },
-            { title: 'Prepare presentation', time: '3:00 PM' }
-        ]},
-        { date: new Date(2024, 7, 11), agendas: [
-            { title: 'Client presentation', time: '11:00 AM' }
-        ]},
-        { date: new Date(2024, 7, 12), agendas: [
-            { title: 'Review feedback', time: '4:00 PM' },
-            { title: 'Team building activity', time: '2:00 PM' },
-        ]},
-        { date: new Date(2024, 7, 13), agendas: [
-            { title: 'Weekly review', time: '9:00 AM' }
-        ]},
-        { date: new Date(2024, 7, 14), agendas: [
-            { title: 'Company event', time: '6:00 PM' },
-            { title: 'Networking session', time: '8:00 PM' }
-        ]},
-    ];
 
-    useEffect(() => {
-        // Ensure the selectedDate is within the current week view
-        setWeekStartDate(startOfWeek(selectedDate));
-    }, [selectedDate]);
 
-    const handleDateSelection = (date: Date) => {
-        setSelectedDate(date);
-        setWeekStartDate(startOfWeek(date));
+    const parseDateFromApi = (dateString: string) => {
+        return parse(dateString, 'dd-MM-yyyy', new Date());
     };
 
+
+
+    const demoAgendas: AgendaItem[] = [
+        {
+            date: parseDateFromApi('09-08-2024'),
+            agendas: [
+                { title: 'Meeting with John', time: '10:00 AM' },
+                { title: 'Lunch with client', time: '12:30 PM' },
+                { title: 'Project deadline', time: 'End of day' },
+                { title: 'Prepare presentation', time: '3:00 PM' },
+            ],
+        },
+        {
+            date: parseDateFromApi('10-08-2024'),
+            agendas: [
+                { title: 'Project deadline', time: 'End of day' },
+                { title: 'Prepare presentation', time: '3:00 PM' },
+            ],
+        },
+        {
+            date: parseDateFromApi('11-08-2024'),
+            agendas: [{ title: 'Client presentation', time: '11:00 AM' }],
+        },
+        {
+            date: parseDateFromApi('12-08-2024'),
+            agendas: [
+                { title: 'Review feedback', time: '4:00 PM' },
+                { title: 'Team building activity', time: '2:00 PM' },
+            ],
+        },
+        {
+            date: parseDateFromApi('13-08-2024'),
+            agendas: [{ title: 'Weekly review', time: '9:00 AM' }],
+        },
+        {
+            date: parseDateFromApi('14-08-2024'),
+            agendas: [
+                { title: 'Company event', time: '6:00 PM' },
+                { title: 'Networking session', time: '8:00 PM' },
+            ],
+        },
+    ];
+
+    // Parsing date from API format (dd-MM-yyyy)
+  
     const handleWeekChange = (increment: boolean) => {
-        setWeekStartDate(prevDate => {
+        setCurrentWeekStart(prevDate => {
             const newDate = increment ? addWeeks(prevDate, 1) : subWeeks(prevDate, 1);
             return newDate;
         });
     };
 
-    const formatDate = (date: Date | null) => {
-        return date ? format(date, 'dd-MM-yyyy') : 'Select a date';
+    const handleDateSelection = (date: Date) => {
+        setSelectedDate(date);
+        setCurrentWeekStart(startOfWeek(date));
     };
+
+    const preloadWeeks = () => {
+        const currentWeek = currentWeekStart;
+        const previousWeek = subWeeks(currentWeekStart, 1);
+        const nextWeek = addWeeks(currentWeekStart, 1);
+        return [previousWeek, currentWeek, nextWeek];
+    };
+
+    const handleScroll = () => {
+        if (scrollRef.current) {
+            const { scrollLeft, clientWidth } = scrollRef.current;
+
+            if (scrollLeft === 0) {
+                setCurrentWeekStart(prevDate => subWeeks(prevDate, 1));
+            } else if (scrollLeft + clientWidth >= scrollRef.current.scrollWidth) {
+                setCurrentWeekStart(prevDate => addWeeks(prevDate, 1));
+            }
+        }
+    };
+
+    useEffect(() => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollLeft = scrollRef.current.clientWidth; // Center the scroll on load
+        }
+    }, [currentWeekStart]);
 
     const getAgendasForDate = (date: Date) => {
         return demoAgendas.find(agenda => agenda.date.toDateString() === date.toDateString())?.agendas || [];
     };
-
     return (
-        <div className='w-80'>
+        <div className="w-80 select-none">
             <div className="flex justify-between items-center mb-4 bg-gray-100 rounded-md px-2 border-b border-gray-400">
                 <span className="text-base font-semibold text-gray-800">
-                    {format(weekStartDate, 'MMMM yyyy')}
+                    {format(currentWeekStart, 'MMMM yyyy')}
                 </span>
                 <div className="flex gap-2">
                     <button
@@ -116,6 +154,7 @@ const EventCalendar = () => {
                     </button>
                 </div>
             </div>
+
             <div className="grid grid-cols-7 gap-1 mb-1 text-center text-[10px] font-medium border-b border-gray-300 pb-1">
                 <div className="text-gray-700">S</div>
                 <div className="text-gray-700">M</div>
@@ -125,39 +164,43 @@ const EventCalendar = () => {
                 <div className="text-gray-700">F</div>
                 <div className="text-gray-700">S</div>
             </div>
-            <div className="grid grid-cols-7 gap-1 mb-4">
-                {Array.from({ length: 7 }, (_, i) => {
-                    const currentDate = addWeeks(weekStartDate, 0).getDate() + i;
-                    const date = new Date(weekStartDate);
-                    date.setDate(currentDate);
 
-                    return (
-                        <div
-                        key={i}
-                        className={`p-2 text-center text-[16px] rounded-full cursor-pointer transition duration-150 ${
-                            date.toDateString() === selectedDate.toDateString()
-                                ? 'bg-blue-500 text-white'
-                                : isToday(date)
-                                ? 'bg-blue-200 text-blue-800'
-                                : 'text-gray-700'
-                        }`}
-                        onClick={() => handleDateSelection(date)}
+            <div
+                className="flex overflow-x-auto no-scrollbar"
+                ref={scrollRef}
+                onScroll={handleScroll}
+                style={{ scrollSnapType: 'x mandatory', whiteSpace: 'nowrap' }}
+            >
+                {preloadWeeks().map((weekStart, index) => (
+                    <div
+                        key={index}
+                        className="grid grid-cols-7 gap-1 min-w-full no-scrollbar"
+                        style={{ scrollSnapAlign: 'center' }}
                     >
-                            {date.getDate()}
-                        </div>
-                    );
-                })}
+                        {Array.from({ length: 7 }, (_, i) => {
+                            const date = addDays(weekStart, i);
+                            return (
+                                <div
+                                    key={i}
+                                    className={`p-2 text-center text-[16px] rounded-full cursor-pointer transition duration-150 ${
+                                        date.toDateString() === selectedDate.toDateString()
+                                            ? 'bg-blue-500 text-white'
+                                            : isToday(date)
+                                            ? 'bg-blue-200 text-blue-800'
+                                            : 'text-gray-700'
+                                    }`}
+                                    onClick={() => setSelectedDate(date)}
+                                >
+                                    {date.getDate()}
+                                </div>
+                            );
+                        })}
+                    </div>
+                ))}
             </div>
-            <AgendaModal 
-                selectedDate={selectedDate} 
-                getAgendasForDate={getAgendasForDate}
-            />
-            {/* <WeekDateModal
-                onDateClick={handleDateSelection}
-                weekStartDate={weekStartDate}
-                handleDateSelection={handleDateSelection}
-         
-            /> */}
+
+            {/* Use the AgendaModal component */}
+            <AgendaModal selectedDate={selectedDate} getAgendasForDate={getAgendasForDate} />
         </div>
     );
 };

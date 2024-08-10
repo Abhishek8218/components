@@ -134,8 +134,9 @@ const MobileTimePickerModal  = ({
             </div>
           </div>
         </div>
-        <div className="border-t border-gray-200 w-full text-center py-2">
-          <button onClick={handleSubmit} className="text-base text-center text-blue-500">Submit</button>
+        <div className="border-t border-gray-200 w-full text-center py-2 flex flex-row justify-between items-center p-12">
+          <button onClick={onClose} className="text-base text-center text-gray-500">Close</button>
+          <button onClick={handleSubmit} className="text-base text-center text-blue-500">Set</button>
         </div>
       </div>
     </div>
