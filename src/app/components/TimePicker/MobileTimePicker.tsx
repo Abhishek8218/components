@@ -1,7 +1,6 @@
-// MobileTimePickerModal.tsx
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-interface MobileTimePickerModalProps {
+interface IMobileTimePickerModalProps {
   selectedTime: string;
   hours: number[];
   minutes: number[];
@@ -9,53 +8,134 @@ interface MobileTimePickerModalProps {
   onClose: () => void;
 }
 
-const MobileTimePickerModal: React.FC<MobileTimePickerModalProps> = ({ selectedTime, hours, minutes, onSelect, onClose }) => {
-  const handleTimeSelect = (hour: number, minute: number) => {
-    onSelect(hour, minute);
+const ITEM_HEIGHT = 40;
+
+const MobileTimePickerModal  = ({
+  selectedTime,
+  hours,
+  minutes,
+  onSelect,
+  onClose,
+}:IMobileTimePickerModalProps) => {
+  const [selectedHour, setSelectedHour] = useState<number>(parseInt(selectedTime.split(':')[0]));
+  const [selectedMinute, setSelectedMinute] = useState<number>(parseInt(selectedTime.split(':')[1]));
+
+  const hourRef = useRef<HTMLDivElement>(null);
+  const minuteRef = useRef<HTMLDivElement>(null);
+
+  const duplicateItems = (arr: number[]) => [...arr, ...arr, ...arr]; // Tripling the array
+
+  const extendedHours = duplicateItems(hours);
+  const extendedMinutes = duplicateItems(minutes);
+
+  const middleHourIndex = extendedHours.length / 3;
+  const middleMinuteIndex = extendedMinutes.length / 3;
+
+  const scrollToSelected = () => {
+    if (hourRef.current && minuteRef.current) {
+      const initialHourScroll = middleHourIndex * ITEM_HEIGHT + selectedHour * ITEM_HEIGHT;
+      const initialMinuteScroll = middleMinuteIndex * ITEM_HEIGHT + selectedMinute * ITEM_HEIGHT;
+
+      hourRef.current.scrollTop = initialHourScroll;
+      minuteRef.current.scrollTop = initialMinuteScroll;
+    }
   };
 
-  const [selectedHour, selectedMinute] = selectedTime.split(':').map(Number);
+  useEffect(() => {
+    scrollToSelected();
+  }, []);
+
+  const handleHourScroll = () => {
+    if (hourRef.current) {
+      const scrollPosition = hourRef.current.scrollTop;
+      const index = Math.round(scrollPosition / ITEM_HEIGHT);
+      const actualIndex = index % hours.length;
+
+      if (scrollPosition < ITEM_HEIGHT * 0.5) {
+        hourRef.current.scrollTop = (middleHourIndex + actualIndex) * ITEM_HEIGHT;
+      } else if (scrollPosition > hourRef.current.scrollHeight - hourRef.current.clientHeight - ITEM_HEIGHT * 0.5) {
+        hourRef.current.scrollTop = (middleHourIndex + actualIndex) * ITEM_HEIGHT;
+      }
+
+      setSelectedHour(hours[actualIndex]);
+    }
+  };
+
+  const handleMinuteScroll = () => {
+    if (minuteRef.current) {
+      const scrollPosition = minuteRef.current.scrollTop;
+      const index = Math.round(scrollPosition / ITEM_HEIGHT);
+      const actualIndex = index % minutes.length;
+
+      if (scrollPosition < ITEM_HEIGHT * 0.5) {
+        minuteRef.current.scrollTop = (middleMinuteIndex + actualIndex) * ITEM_HEIGHT;
+      } else if (scrollPosition > minuteRef.current.scrollHeight - minuteRef.current.clientHeight - ITEM_HEIGHT * 0.5) {
+        minuteRef.current.scrollTop = (middleMinuteIndex + actualIndex) * ITEM_HEIGHT;
+      }
+
+      setSelectedMinute(minutes[actualIndex]);
+    }
+  };
+
+  const handleSubmit = () => {
+    onSelect(selectedHour, selectedMinute);
+    onClose();
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
       <div className="bg-white rounded-lg shadow p-4 pb-1 w-full max-w-md mx-4">
         <div className="flex flex-col items-center">
           <h3 className="text-lg font-bold mb-4">Select Time</h3>
-          <div className="flex space-x-4">
+          <div className="flex space-x-4 w-full">
             <div className="w-1/2">
               <h4 className="text-center font-medium">Hours</h4>
-              <div className="overflow-y-auto h-48 no-scrollbar">
-                {hours.map((hour) => (
-                  <div
-                    key={hour}
-                    id={`hour-${hour}`}
-                    onClick={() => handleTimeSelect(hour, selectedMinute)}
-                    className={`cursor-pointer text-center p-[2px] rounded transition duration-150 ease-in-out ${selectedHour === hour ? 'bg-blue-500 text-white' : 'hover:bg-blue-200'}`}
-                  >
-                    {('0' + hour).slice(-2)}
-                  </div>
-                ))}
+              <div
+                className="overflow-y-scroll h-48 no-scrollbar"
+                ref={hourRef}
+                onScroll={handleHourScroll}
+              >
+                <div className="flex flex-col items-center pt-[50%]">
+                  {extendedHours.map((hour, index) => (
+                    <div
+                      key={index}
+                      className={`cursor-pointer text-center py-2 transition duration-150 ease-in-out ${
+                        selectedHour === hour ? 'text-blue-500 text-xl font-bold' : 'text-gray-700 text-lg'
+                      }`}
+                      style={{ height: ITEM_HEIGHT }}
+                    >
+                      {('0' + hour).slice(-2)}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
             <div className="w-1/2">
               <h4 className="text-center font-medium">Minutes</h4>
-              <div className="overflow-y-auto h-48 no-scrollbar">
-                {minutes.map((minute) => (
-                  <div
-                    key={minute}
-                    id={`minute-${minute}`}
-                    onClick={() => handleTimeSelect(selectedHour, minute)}
-                    className={`cursor-pointer text-center p-[2px] rounded transition duration-150 ease-in-out ${selectedMinute === minute ? 'bg-blue-500 text-white' : 'hover:bg-blue-200'}`}
-                  >
-                    {('0' + minute).slice(-2)}
-                  </div>
-                ))}
+              <div
+                className="overflow-y-scroll h-48 no-scrollbar"
+                ref={minuteRef}
+                onScroll={handleMinuteScroll}
+              >
+                <div className="flex flex-col items-center pt-[50%]">
+                  {extendedMinutes.map((minute, index) => (
+                    <div
+                      key={index}
+                      className={`cursor-pointer text-center py-2 transition duration-150 ease-in-out ${
+                        selectedMinute === minute ? 'text-blue-500 text-xl font-bold' : 'text-gray-700 text-lg'
+                      }`}
+                      style={{ height: ITEM_HEIGHT }}
+                    >
+                      {('0' + minute).slice(-2)}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div className="border-t border-gray-200 w-full text-center py-2">
-          <button onClick={onClose} className="text-base text-center text-blue-500">Submit</button>
+          <button onClick={handleSubmit} className="text-base text-center text-blue-500">Submit</button>
         </div>
       </div>
     </div>
