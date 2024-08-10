@@ -158,7 +158,7 @@ const EventCalendar = () => {
                 </div>
             </div>
 
-            <div className="grid grid-cols-7 gap-1 mb-1 text-center text-xs font-medium border-b border-gray-300 pb-1 pt-6 p-[10px]">
+            <div className="grid grid-cols-7 gap-1 mb-1 text-center text-xs font-medium border-b border-gray-300 pb-1 pt-2 px-[10px]">
                 <div className="text-gray-700">S</div>
                 <div className="text-gray-700">M</div>
                 <div className="text-gray-700">T</div>
