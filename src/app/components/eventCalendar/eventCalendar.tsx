@@ -1,3 +1,6 @@
+'use client';
+
+
 import React, { useState, useRef, useEffect } from 'react';
 import { format, startOfWeek, addDays, addWeeks, subWeeks, isToday, parse } from 'date-fns';
 import AgendaModal from './agendaModal'; // Importing the AgendaModal component
@@ -104,8 +107,8 @@ const EventCalendar = () => {
         return demoAgendas.find(agenda => agenda.date.toDateString() === date.toDateString())?.agendas || [];
     };
     return (
-        <div className="w-80 select-none">
-            <div className="flex justify-between items-center mb-4 bg-gray-100 rounded-md px-2 border-b border-gray-400">
+        <div className="w-full min-h-[100dvh] select-none">
+            <div className="flex justify-between items-center mb-4 bg-gray-100 px-2 border-b border-gray-400 pt-4">
                 <span className="text-base font-semibold text-gray-800">
                     {format(currentWeekStart, 'MMMM yyyy')}
                 </span>
@@ -155,7 +158,7 @@ const EventCalendar = () => {
                 </div>
             </div>
 
-            <div className="grid grid-cols-7 gap-1 mb-1 text-center text-[10px] font-medium border-b border-gray-300 pb-1">
+            <div className="grid grid-cols-7 gap-1 mb-1 text-center text-xs font-medium border-b border-gray-300 pb-1 pt-6 p-[10px]">
                 <div className="text-gray-700">S</div>
                 <div className="text-gray-700">M</div>
                 <div className="text-gray-700">T</div>
@@ -174,7 +177,7 @@ const EventCalendar = () => {
                 {preloadWeeks().map((weekStart, index) => (
                     <div
                         key={index}
-                        className="grid grid-cols-7 gap-1 min-w-full no-scrollbar"
+                        className="grid grid-cols-7 gap-1 min-w-full no-scrollbar mb-4 p-[10px]"
                         style={{ scrollSnapAlign: 'center' }}
                     >
                         {Array.from({ length: 7 }, (_, i) => {
@@ -187,7 +190,7 @@ const EventCalendar = () => {
                                             ? 'bg-blue-500 text-white'
                                             : isToday(date)
                                             ? 'bg-blue-200 text-blue-800'
-                                            : 'text-gray-700'
+                                            : 'text-black'
                                     }`}
                                     onClick={() => setSelectedDate(date)}
                                 >

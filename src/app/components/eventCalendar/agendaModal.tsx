@@ -32,11 +32,11 @@ const AgendaModal: React.FC<AgendaModalProps> = ({ selectedDate, getAgendasForDa
     });
 
     return (
-        <div className="inset-0 flex flex-col items-center justify-center z-50 mt-1" >
-                <h3 className="font-medium text-base mb-2 bg-gray-100 rounded p-2 w-full border-y border-gray-400 text-center">
+        <div className="inset-0 flex flex-col items-center justify-center z-50 mt-1 " >
+                <h3 className="font-medium text-base mb-2 bg-gray-100  p-2 w-full border-y border-gray-400 text-center">
                   {format(selectedDate, 'MMMM dd, yyyy')}
                 </h3>
-            <div className="bg-white shadow-lg rounded-lg py-2 max-w-md w-full min-h-[350px] max-h-[350px] overflow-scroll custom-scrollbar">
+            <div className="bg-white shadow-lg rounded-lg py-2 max-w-md w-full min-h-[65vh] max-h-[350px] overflow-scroll custom-scrollbar">
                 <div className="space-y-1 px-1">
                     {sortedAgendas.length > 0 ? (
                         sortedAgendas.map((agenda, index) => (
