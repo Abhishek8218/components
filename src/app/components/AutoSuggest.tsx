@@ -1,4 +1,4 @@
-import React, { forwardRef, useState, useImperativeHandle, ChangeEvent, KeyboardEvent, Ref, useEffect, useRef } from 'react';
+import React, { forwardRef, useState, useImperativeHandle, ChangeEvent, useEffect, useRef } from 'react';
 
 type SearchBarProps = {
   suggestions: string[];
@@ -16,6 +16,7 @@ const SearchBar = forwardRef<SearchBarHandle, SearchBarProps>(
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [debouncedQuery, setDebouncedQuery] = useState(query);
     const [error, setError] = useState<string | null>(null);
+    const [justSelected, setJustSelected] = useState(false);
 
     const searchBarRef = useRef<HTMLDivElement>(null);
 
@@ -37,24 +38,21 @@ const SearchBar = forwardRef<SearchBarHandle, SearchBarProps>(
     }, [query]);
 
     useEffect(() => {
-      if (debouncedQuery) {
-        // Simulate fetching suggestions or other async operation
+      if (debouncedQuery && !justSelected) {
         const fetchSuggestions = async () => {
           try {
-            // Example logic that might throw an error
-            // Replace this with actual API call if needed
             if (debouncedQuery === 'error') {
               throw new Error('500 Internal Server Error');
             }
             
             setFilteredSuggestions(
-             
               suggestions.filter((suggestion) =>
                 suggestion.toLowerCase().includes(debouncedQuery.toLowerCase())
               )
             );
-            console.log("setting suggestions")
-            setShowSuggestions(debouncedQuery.length > 0);
+            setTimeout(() => {
+              setShowSuggestions(debouncedQuery.length > 0);
+            }, 100);
             setError(null); // Clear error if successful
           } catch (e) {
             setError('500 Internal Server Error');
@@ -66,7 +64,7 @@ const SearchBar = forwardRef<SearchBarHandle, SearchBarProps>(
         setShowSuggestions(false);
         setError(null);
       }
-    }, [debouncedQuery, suggestions]);
+    }, [debouncedQuery, suggestions, justSelected]);
 
     useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
@@ -83,23 +81,28 @@ const SearchBar = forwardRef<SearchBarHandle, SearchBarProps>(
     }, []);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value;
-      setQuery(value);
+      if (justSelected) {
+        setJustSelected(false);
+        return;
+      }
+      setQuery(e.target.value);
     };
 
     const handleSelect = (value: string) => {
-      console.log('Selected suggestion:', value);
       setQuery(value);
       setFilteredSuggestions([]);
       setShowSuggestions(false);
+      setJustSelected(true);
       onSelect(value);
-    };
 
-    // const handleKeyDown = (e: KeyboardEvent) => {
-    //   if (e.key === 'Enter' && filteredSuggestions.length > 0) {
-    //     handleSelect(filteredSuggestions[0]);
-    //   }
-    // };
+      const input = document.getElementById('search-input') as HTMLInputElement;
+      if (input) {
+        input.blur();
+        setTimeout(() => {
+          input.focus();
+        }, 100);
+      }
+    };
 
     return (
       <div ref={searchBarRef} className="relative w-full max-w-md mx-auto">
@@ -108,7 +111,6 @@ const SearchBar = forwardRef<SearchBarHandle, SearchBarProps>(
           type="text"
           value={query}
           onChange={handleChange}
-          // onKeyDown={handleKeyDown}
           className="w-[350px] px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
           placeholder="Search..."
         />
@@ -142,14 +144,14 @@ type HighlightedTextProps = {
   query: string;
 };
 
-const HighlightedText = (props: HighlightedTextProps) => {
-  if (!props.query) return <>{props.text}</>;
+const HighlightedText = ({ text, query }: HighlightedTextProps) => {
+  if (!query) return <>{text}</>;
 
-  const parts = props.text.split(new RegExp(`(${props.query})`, 'gi'));
+  const parts = text.split(new RegExp(`(${query})`, 'gi'));
   return (
     <>
       {parts.map((part, index) =>
-        part.toLowerCase() === props.query.toLowerCase() ? (
+        part.toLowerCase() === query.toLowerCase() ? (
           <span key={index} className="text-gray-400 font-semibold">{part}</span>
         ) : (
           <span key={index}>{part}</span>
