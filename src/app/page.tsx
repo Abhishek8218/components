@@ -22,6 +22,8 @@ import TimePicker from './components/TimePicker/TimePicker';
 import DateRangePicker from './components/DateRangeSelector/RangeSelector';
 import EventCalendar from './components/eventCalendar/eventCalendar';
 import MultiSelectSearchBar from './components/multiSelectInput/multiSelectInput';
+import MultiSelectDropdown from './components/multiSelectCheckBoxInput/multiSelectCheckBoxInput';
+import SingleSelectDropdown from './components/singleSelectInput/singleSelectInput';
 
 
 export interface House {
@@ -124,6 +126,7 @@ const Home = () => {
 
   const [selectedValue, setSelectedValue] = useState<string>('');
   const [multiSelectInputValue, setMultiSelectInputValue] = useState<string>('');
+  const [singleSelectInputValue, setSingleSelectInputValue] = useState<string>('');
 
   const handleSelect = (value: string) => {
     setSelectedValue(value);
@@ -131,7 +134,13 @@ const Home = () => {
 
 
   const handleMultiSelect = (values: string[]) => {
-     setMultiSelectInputValue(values.join(', '));
+    console.log(values);
+     setSingleSelectInputValue(values.join(', '));
+  }
+
+  const handleSingleSelect = (value: string) => {
+    console.log(value);
+     setMultiSelectInputValue(value);
   }
 
 
@@ -186,6 +195,14 @@ const Home = () => {
 
  <MultiSelectSearchBar  suggestions={suggestions} onSelect={handleMultiSelect}/>
  <p className="mt-4">Selected: {multiSelectInputValue}</p>
+
+
+ <p className='mb-[-55px] mr-10'>Multi Select Check BOx</p>
+ <MultiSelectDropdown options={suggestions} onSelect={handleMultiSelect} />
+
+ <p className='mb-[-55px] mr-10'>Single Select Check BOx</p>
+ <SingleSelectDropdown options={suggestions} onSelect={handleSingleSelect} />
+ <p>Single Select Value : {singleSelectInputValue}</p>
       <ReactForm/>
 
 
