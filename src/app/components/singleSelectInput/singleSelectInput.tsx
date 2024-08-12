@@ -84,5 +84,6 @@ const SingleSelectDropdown = forwardRef<HTMLDivElement, SearchBarProps>(
   }
 );
 
+SingleSelectDropdown.displayName = 'SingleSelectDropdown';
 
 export default SingleSelectDropdown;
