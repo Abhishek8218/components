@@ -21,6 +21,7 @@ import DatePicker from './components/DatePicker/DatePIcker';
 import TimePicker from './components/TimePicker/TimePicker';
 import DateRangePicker from './components/DateRangeSelector/RangeSelector';
 import EventCalendar from './components/eventCalendar/eventCalendar';
+import MultiSelectSearchBar from './components/multiSelectInput/multiSelectInput';
 
 
 export interface House {
@@ -122,11 +123,16 @@ const Home = () => {
 
 
   const [selectedValue, setSelectedValue] = useState<string>('');
+  const [multiSelectInputValue, setMultiSelectInputValue] = useState<string>('');
 
   const handleSelect = (value: string) => {
     setSelectedValue(value);
   };
 
+
+  const handleMultiSelect = (values: string[]) => {
+     setMultiSelectInputValue(values.join(', '));
+  }
 
 
   const useUserAgent = () => {
@@ -177,6 +183,9 @@ const Home = () => {
 
 </div>
  <EventCalendar/>
+
+ <MultiSelectSearchBar  suggestions={suggestions} onSelect={handleMultiSelect}/>
+ <p className="mt-4">Selected: {multiSelectInputValue}</p>
       <ReactForm/>
 
 

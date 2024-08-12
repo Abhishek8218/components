@@ -83,8 +83,8 @@ const TimePickerModal = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
-      <div className="bg-white rounded-lg shadow p-4 pb-1 w-full max-w-md mx-4">
+    <div className=" inset-0  bg-opacity-60 flex justify-center items-center z-50">
+    <div className=" bg-white rounded-lg shadow p-4 pb-1 min-w-[270px]  ml-4 mt-1">
         <div className="flex flex-col items-center">
           <h3 className="text-lg font-bold mb-4">Select Time</h3>
           <div className="flex space-x-4 w-full">
@@ -96,7 +96,7 @@ const TimePickerModal = ({
                 onScroll={handleHourScroll}
                 style={{ scrollBehavior: 'smooth' }}
               >
-                <div className="flex flex-col items-center pt-[50%]">
+                <div className="flex flex-col items-center pt-[60%]">
                   {extendedHours.map((hour, index) => (
                     <div
                       key={index}
@@ -119,7 +119,7 @@ const TimePickerModal = ({
                 onScroll={handleMinuteScroll}
                 style={{ scrollBehavior: 'smooth' }}
               >
-                <div className="flex flex-col items-center pt-[50%] no-scrollbar">
+                <div className="flex flex-col items-center pt-[60%] no-scrollbar">
                   {extendedMinutes.map((minute, index) => (
                     <div
                       key={index}

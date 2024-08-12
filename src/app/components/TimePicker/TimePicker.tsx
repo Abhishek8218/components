@@ -46,7 +46,7 @@ const TimePicker = () => {
 
 
   useEffect(() => {
-    if (showTimepicker) {
+    if (isMobile && showTimepicker) {
       document.body.classList.add('no-scroll');
     } else {
       document.body.classList.remove('no-scroll');

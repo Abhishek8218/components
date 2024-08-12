@@ -172,6 +172,17 @@ const DateRangePicker = () => {
     
     
 
+      useEffect(() => {
+
+
+      
+        if ( isMobile && (showDateModal || showYearModal || showMonthModal)) {
+          document.body.classList.add('no-scroll');
+        } else {
+          document.body.classList.remove('no-scroll');
+        }
+      
+      }, [showDateModal, showYearModal, showMonthModal]);
 
 
 
