@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect } from 'react';
 import { DAYS, MONTH_NAMES } from '../../DatePicker/constants';
 import { MaterialSymbol } from 'react-material-symbols';
 import { format, isAfter, isBefore, isValid } from 'date-fns';
@@ -120,11 +122,19 @@ const MobileDateModal = ({
 
 
 console.log("Final Start Date",startDate,"FInal End Date",endDate)
+useEffect(() => {
+    // Disable scrolling on the background
+    document.body.style.overflow = 'hidden';
 
+    return () => {
+      // Re-enable scrolling when the modal is closed
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
 
     return (
 <div className="fixed bottom-0 inset-0 flex items-center justify-center z-50 px-10">
-      <div className="fixed inset-0 bg-gray-6 bg-opacity-80"></div>
+      <div className="fixed inset-0 bg-black bg-opacity-50"></div>
       <div className="bg-white rounded-lg shadow p-4 relative z-1 w-[354px] h-[528px] min-h-[528px] min-w-[354px] max-h-[528px] max-w-[354px]">
         <div className="flex justify-between items-center mb-2">
                 <div>

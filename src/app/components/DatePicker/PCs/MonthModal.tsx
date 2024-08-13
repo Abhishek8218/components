@@ -7,22 +7,31 @@ interface MonthModalProps {
   showMonthModal: boolean;
   handleMonthSelect: (selectedMonth: number) => void;
   handleMonthModalClose: () => void;
+  setCurrentMonth: () => void;
 }
 
 const MonthModal = ({
   month,
   showMonthModal,
   handleMonthSelect,
-  handleMonthModalClose
+  handleMonthModalClose,
+  setCurrentMonth
 }:MonthModalProps) => (
-  <div className={` inset-0 flex items-center justify-center max-w-[272px] max-h-[270px]  ml-4 mt-2 ${showMonthModal ? '' : 'hidden'}`}>
+  <div className={` inset-0 flex items-center justify-center max-w-[272px] max-h-[335px]  ml-4 mt-2 ${showMonthModal ? '' : 'hidden'}`}>
     <div className="inset-0  bg-opacity-50" onClick={handleMonthModalClose}></div>
-    <div className="bg-white rounded-lg min-w-[272px] h-[270px] p-4 relative">
+    <div className="bg-white shadow rounded-lg min-w-[272px] h-[335px] p-4 relative">
       <div className='w-full flex flex-row flex-nowrap justify-between mb-4'>
         <h3 className="text-lg font-bold text-gray-800">Select Month</h3>
+        <div className='flex justify-center items-center gap-1'>
+  
+<button className='text-blue-500 text-sm  ' onClick={setCurrentMonth}>Current</button>
+ 
+     
+       
         <MaterialSymbol icon='close' fill size={32} color='gray' onClick={handleMonthModalClose} />
+        </div>
       </div>
-      <div className="grid grid-cols-1 gap-2 overflow-y-scroll max-h-[200px] custom-scrollbar ">
+      <div className="grid grid-cols-1 gap-2 overflow-y-scroll max-h-[250px] custom-scrollbar ">
         {MONTH_NAMES.map((monthName, index) => (
           <p
             key={index}

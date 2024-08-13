@@ -24,6 +24,7 @@ import EventCalendar from './components/eventCalendar/eventCalendar';
 import MultiSelectSearchBar from './components/multiSelectInput/multiSelectInput';
 import MultiSelectDropdown from './components/multiSelectCheckBoxInput/multiSelectCheckBoxInput';
 import SingleSelectDropdown from './components/singleSelectInput/singleSelectInput';
+import TimeSelector from './components/TimeSelector/TimeSelector';
 
 
 export interface House {
@@ -140,7 +141,7 @@ const Home = () => {
 
   const handleSingleSelect = (value: string) => {
     console.log(value);
-     setMultiSelectInputValue(value);
+     setSingleSelectInputValue(value);
   }
 
 
@@ -158,7 +159,10 @@ const Home = () => {
 
   const isMobile = /Mobi|Android/i.test(userAgent);
 
-
+  const handleTimeChange = (time: string) => {
+    console.log('Selected Time:', time);
+  };
+  
   return (
     <div className="flex flex-col justify-center items-center gap-16">
       <Rating stars={1} onRated={handleRated} />
@@ -203,7 +207,9 @@ const Home = () => {
  <p className='mb-[-55px] mr-10'>Single Select Check BOx</p>
  <SingleSelectDropdown options={suggestions} onSelect={handleSingleSelect} />
  <p>Single Select Value : {singleSelectInputValue}</p>
-      <ReactForm/>
+
+<TimeSelector onChange={handleTimeChange}/>
+<div className='mt-[500px]'>h</div>
 
 
 

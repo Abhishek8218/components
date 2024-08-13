@@ -2,12 +2,12 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { DAYS, MONTH_NAMES } from '../constants';
+import { DAYS, MONTH_NAMES } from './constants';
 import { MaterialSymbol } from 'react-material-symbols';
 
 
 
-interface MobileDateModalProps {
+interface AttendanceCalModalProps {
   month: number;
   year: number;
   selectedate: string;
@@ -31,7 +31,7 @@ interface MobileDateModalProps {
   setcurrentDay: () => void;
 }
 
-const MobileDateModal= ({
+const AttendanceCalModal= ({
   month,
   year,
   selectedate,
@@ -52,7 +52,7 @@ const MobileDateModal= ({
 handleDatePickerClose,
   activeDate,
   setcurrentDay
-}:MobileDateModalProps) => {
+}:AttendanceCalModalProps) => {
   useEffect(() => {
     // Disable scrolling on the background
     document.body.style.overflow = 'hidden';
@@ -68,9 +68,9 @@ handleDatePickerClose,
   return (
     console.log("DateModal", selectedate),
     console.log("activeDate", activeDate),
-    <div className="fixed bottom-0 inset-0 flex items-center justify-center z-50 px-10">
+    <div className="fixed bottom-0 inset-0 flex items-center justify-center z-50 ">
       <div className="fixed inset-0 bg-gray-6 bg-opacity-80"></div>
-      <div className="bg-white rounded-lg shadow p-4 relative z-1 w-[354px] h-[528px] min-h-[528px] min-w-[354px] max-h-[528px] max-w-[354px]">
+      <div className="bg-white rounded-lg shadow p-4 relative z-1 w-[354px] h-[528px] min-h-full min-w-full ">
         <div className="flex justify-between items-center">
           <div>
             <span className="text-lg font-bold text-gray-800 cursor-pointer" onClick={handleMonthModal}>{MONTH_NAMES[month]}</span>
@@ -210,4 +210,4 @@ handleDatePickerClose,
   );
 };
 
-export default MobileDateModal;
+export default AttendanceCalModal;

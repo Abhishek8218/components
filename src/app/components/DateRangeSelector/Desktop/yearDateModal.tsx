@@ -26,7 +26,7 @@ const YearModal= ({
   }, [showYearModal, year]);
 
   return (
-    <div className="inset-0 flex items-center justify-center mt-12 w-[272px] h-[365px] no-scrollbar shadow rounded">
+    <div className="absolute bottom-0 min-h-fit top-8 inset-0 flex items-center justify-center mt-12 w-[272px] h-[365px] no-scrollbar shadow rounded">
     <div ref={yearModalRef} className="bg-white rounded-lg w-[272px] h-[365px] p-4  no-scrollbar">
       <div className='w-full flex flex-row flex-nowrap justify-between mb-4'>
         <h3 className="text-lg font-semibold">Select Year</h3>

@@ -1,14 +1,10 @@
+'use client';
+
 import React, { useState, useEffect } from "react";
 import { MaterialSymbol } from "react-material-symbols";
-import DateModal from "./PCs/DateModal";
-import MonthModal from "./PCs/MonthModal";
-import YearModal from "./PCs/YearModal";
-import { DAYS, MONTH_NAMES } from "./constants";
-import MobileDateModal from "./Android/DateModal";
-import MobileMonthModal from "./Android/MonthModal";
-import MobileYearModal from "./Android/YearModal";
 import { set } from "date-fns";
 import { se } from "date-fns/locale";
+import AttendanceCalModal from "./attendanceModal";
 
 interface DatesByMonth {
   [key: number]: number[];
@@ -223,14 +219,9 @@ const DatePicker = () => {
         <div className="antialiased sans-serif">
           <div className="container mx-auto px-4 py-2 md:py-10">
             <div className="mb-5 w-64">
-              <label
-                className="font-bold mb-1 text-gray-700 block"
-                htmlFor="datepicker"
-              >
-                Select Date
-              </label>
+        
               <div className="relative">
-                <input type="hidden" name="date" />
+                {/* <input type="hidden" name="date" />
                 <input
                   type="text"
                   readOnly
@@ -262,12 +253,12 @@ const DatePicker = () => {
                       d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                     />
                   </svg>
-                </div>)}
+                </div>)} */}
              
 
-                {showDatepicker &&
-                  (isMobile ? (
-                    <MobileDateModal
+
+                
+                    <AttendanceCalModal
                             month={month}
                       year={year}
                       blankDays={blankDays}
@@ -285,69 +276,12 @@ const DatePicker = () => {
                       selectedate={date}
                       handleDateClick={handleDateClick}
                       SelectedDate={selectedDate}
-                      activeDate={activeDate}
                       handleDatePickerClose={closeModals}
                       setcurrentDay={setCurrentDay}
-                    />
-                  ) : (
-                    <DateModal
-                      month={month}
-                      year={year}
-                      blankDays={blankDays}
-                      noOfDays={noOfDays}
-                      getDateValue={getDateValue}
-                      isToday={isToday}
-                      isBanned={isBanned}
-                      isImportant={isImportant}
-                      setMonth={setMonth}
-                      setYear={setYear}
-                      handleMonthModal={handleMonthModal}
-                      handleYearModal={handleYearModal}
-                      onConfirm={closeModals}
-                      onReset={resetDate}
-                      selectedate={date}
-                      handleDateClick={handleDateClick}
-                      SelectedDate={selectedDate}
                       activeDate={activeDate}
-                      setcurrentDay={setCurrentDay}
                     />
-                  ))}
-                {showMonthModal &&
-                  (isMobile ? (
-                    <MobileMonthModal
-                      month={month}
-                      showMonthModal={showMonthModal}
-                      handleMonthSelect={handleMonthSelect}
-                      handleMonthModalClose={handleMonthModalClose}
-                      setCurrentMonth={setCurrentMonth}
-                    />
-                  ) : (
-                    <MonthModal
-                      month={month}
-                      showMonthModal={showMonthModal}
-                      handleMonthSelect={handleMonthSelect}
-                      handleMonthModalClose={handleMonthModalClose}
-                      setCurrentMonth={setCurrentMonth}
-                    />
-                  ))}
-                {showYearModal &&
-                  (isMobile ? (
-                    <MobileYearModal
-                      year={year}
-                      showYearModal={showYearModal}
-                      handleYearSelect={handleYearSelect}
-                      handleYearModalClose={handleYearModalClose}
-                      setCurrentYear={setCurrentYear}
-                    />
-                  ) : (
-                    <YearModal
-                      year={year}
-                      showYearModal={showYearModal}
-                      handleYearSelect={handleYearSelect}
-                      handleYearModalClose={handleYearModalClose}
-                      setCurrentYear={setCurrentYear}
-                    />
-                  ))}
+        
+               
               </div>
             </div>
           </div>

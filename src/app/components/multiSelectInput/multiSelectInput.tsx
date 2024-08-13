@@ -1,4 +1,4 @@
-import React, { forwardRef, useState, ChangeEvent, useEffect, useRef } from 'react';
+import React, { forwardRef, useState, ChangeEvent, useEffect, useRef, useCallback } from 'react';
 
 type SearchBarProps = {
   suggestions: string[];
@@ -10,102 +10,114 @@ const MultiSelectSearchBar = forwardRef<HTMLDivElement, SearchBarProps>(
     const [query, setQuery] = useState('');
     const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
-    const [debouncedQuery, setDebouncedQuery] = useState(query);
     const [error, setError] = useState<string | null>(null);
 
     const [selectedValues, setSelectedValues] = useState<string[]>([]);
-    
+    const [createdValues, setCreatedValues] = useState<string[]>([]);
     const searchBarRef = useRef<HTMLDivElement>(null);
-    
-    useEffect(() => {
-        const handler = setTimeout(() => {
-        setDebouncedQuery(query);
-    }, 300);
-    
-    return () => {
-        clearTimeout(handler);
-    };
-}, [query]);
+    const latestQueryRef = useRef(query);
 
-useEffect(() => {
-    if (debouncedQuery) {
+    const debounce = (func: () => void, delay: number) => {
+      let timeoutId: NodeJS.Timeout;
+      return () => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(func, delay);
+      };
+    };
+
+    const handleFetchSuggestions = useCallback(
+      debounce(async () => {
         const fetchSuggestions = async () => {
-            try {
-                if (debouncedQuery === 'error') {
-                    throw new Error('500 Internal Server Error');
-                }
-                
-                setFilteredSuggestions(
-                    suggestions.filter((suggestion) =>
-                        suggestion.toLowerCase().includes(debouncedQuery.toLowerCase())
-                )
+          try {
+            if (latestQueryRef.current === 'error') {
+              throw new Error('500 Internal Server Error');
+            }
+
+            setFilteredSuggestions(
+              suggestions.filter((suggestion) =>
+                suggestion.toLowerCase().includes(latestQueryRef.current.toLowerCase())
+              )
             );
-            setTimeout(() => {
-                setShowSuggestions(debouncedQuery.length > 0);
-            }, 100);
+            console.log(latestQueryRef.current);
+            console.log("qury", query);
+            setShowSuggestions(latestQueryRef.current.length > 0);
             setError(null); // Clear error if successful
-        } catch (e) {
+          } catch (e) {
             setError('500 Internal Server Error');
           }
         };
         fetchSuggestions();
-    } else {
-        setFilteredSuggestions([]);
-        setShowSuggestions(false);
-        setError(null);
-    }
-}, [debouncedQuery, suggestions]);
+      }, 300),
+      [suggestions]
+    );
 
-useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    useEffect(() => {
+      latestQueryRef.current = query;
+      handleFetchSuggestions();
+    }, [query, handleFetchSuggestions]);
+
+    useEffect(() => {
+      const handleClickOutside = (event: MouseEvent) => {
         if (searchBarRef.current && !searchBarRef.current.contains(event.target as Node)) {
-            setShowSuggestions(false);
+          setShowSuggestions(false);
         }
-    };
+      };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    
+      document.addEventListener('mousedown', handleClickOutside);
+
       return () => {
         document.removeEventListener('mousedown', handleClickOutside);
       };
     }, []);
-    
+
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        
-        setQuery(e.target.value);
+      setQuery(e.target.value);
     };
-    
+
     const handleSelect = (value: string) => {
-        if (!selectedValues.includes(value)) {
-            const newValues = [...selectedValues, value];
-            setSelectedValues(newValues);
-            onSelect(newValues);
-        }
+      if (!selectedValues.includes(value)) {
+        const newValues = [...selectedValues, value];
+        setSelectedValues(newValues);
+        onSelect(newValues);
+      }
+      setQuery('');
+      setFilteredSuggestions([]);
+      setShowSuggestions(false);
+      document.getElementById('multi-search-input')?.focus();
+    };
+
+    const handleCreateNew = () => {
+      if (query && !selectedValues.includes(query)) {
+        const newValues = [...selectedValues, query];
+        setSelectedValues(newValues);
+        setCreatedValues([...createdValues, query]);
+        onSelect(newValues);
         setQuery('');
         setFilteredSuggestions([]);
         setShowSuggestions(false);
         document.getElementById('multi-search-input')?.focus();
-        
+      }
     };
+
     const handleRemove = (value: string) => {
-        const newValues = selectedValues.filter((v) => v !== value);
-        setSelectedValues(newValues);
-        onSelect(newValues);
+      const newValues = selectedValues.filter((v) => v !== value);
+      setSelectedValues(newValues);
+      onSelect(newValues);
     };
-    
+
     return (
-        <div ref={ref} className="relative w-full max-w-md mx-auto">
+      <div ref={ref} className="relative w-full max-w-md mx-auto">
         <div className="flex flex-wrap items-center w-[350px] px-4 py-2 border border-gray-300 rounded-lg focus-within:border-blue-500">
           {selectedValues.map((value, index) => (
             <div
               key={index}
               className="flex items-center px-2 py-1 mr-2 mb-1 bg-gray-200 rounded-full"
-              >
+            >
               <span className="text-sm">{value}</span>
               <button
                 className="ml-2 text-gray-500 hover:text-gray-700 focus:outline-none"
                 onClick={() => handleRemove(value)}
-                >
+              >
                 &times;
               </button>
             </div>
@@ -133,8 +145,16 @@ useEffect(() => {
                 </li>
               ))
             ) : (
-              <li className="px-4 py-2 text-gray-500">No suggestions</li>
+              ""
             )}
+            <li className="px-4 py-2 text-gray-500 border-t border-gray-300">No suggestions ?
+                <button
+                  className="ml-2 text-sm text-blue-500 rounded-lg"
+                  onClick={handleCreateNew}
+                >
+                  Create "{query}"
+                </button>
+              </li>
           </ul>
         )}
       </div>

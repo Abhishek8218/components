@@ -1,4 +1,7 @@
-import React from 'react';
+'use client';
+
+
+import React, { useEffect } from 'react';
 import { MaterialSymbol } from 'react-material-symbols';
 
 
@@ -16,13 +19,27 @@ const MONTH_NAMES = [
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
+ 
 const MobileMonthModal= ({
   month,
   showMonthModal,
   handleMonthSelect,
   handleMonthModalClose,
   setCurrentMonth
-}:MobileMonthModalProps) => (
+}:MobileMonthModalProps) =>
+  {
+    useEffect(() => {
+      // Disable scrolling on the background
+      document.body.style.overflow = 'hidden';
+  
+      return () => {
+        // Re-enable scrolling when the modal is closed
+        document.body.style.overflow = 'auto';
+      };
+    }, []);
+  
+    
+  return  (
   <div className={`fixed inset-0 flex items-center justify-center z-50 px-10 ${showMonthModal ? '' : 'hidden'}`}>
     <div className="fixed inset-0 bg-opacity-60"></div> 
     <div className="bg-white rounded-lg shadow p-4 relative z-1  w-[354px] h-[528px] min-h-[528px] min-w-[354px] max-h-[528px] max-w-[354px]">
@@ -59,5 +76,7 @@ const MobileMonthModal= ({
     </div>
   </div>
 );
+
+  }
 
 export default MobileMonthModal;

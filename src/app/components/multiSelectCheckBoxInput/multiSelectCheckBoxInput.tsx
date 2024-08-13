@@ -42,6 +42,7 @@ const MultiSelectDropdown = forwardRef<HTMLDivElement, SearchBarProps>(
       const newValues = selectedValues.filter((v) => v !== value);
       setSelectedValues(newValues);
       onSelect(newValues);
+
     };
 
     return (
@@ -52,6 +53,7 @@ const MultiSelectDropdown = forwardRef<HTMLDivElement, SearchBarProps>(
         >
           {selectedValues.length > 0 ? (
             selectedValues.map((value, index) => (
+                
               <div
                 key={index}
                 className="flex items-center px-2 py-1 mr-2 mb-1 bg-gray-200 rounded-full"
@@ -68,6 +70,9 @@ const MultiSelectDropdown = forwardRef<HTMLDivElement, SearchBarProps>(
           ) : (
             <span className="text-gray-500">Select...</span>
           )}
+
+          {selectedValues.length > 0 ? (<div><button className="ml-2 text-blue-500 hover:text-red-400 focus:outline-none" onClick={() => setSelectedValues([])}>clear all</button></div>): ("")}
+          
         </div>
 
         {showOptions && (

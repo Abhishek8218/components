@@ -123,7 +123,7 @@ console.log("Final Start Date",startDate,"FInal End Date",endDate)
 
 
     return (
-        <div className="bg-white mt-12 rounded-lg shadow p-4 top-0 left-0" style={{ width: '17rem' }}>
+        <div className="absolute bottom-0 min-h-fit top-8 bg-white mt-12 rounded-lg shadow p-4 right-0 left-0" style={{ width: '17rem' }}>
             <div className="flex justify-between items-center mb-2">
                 <div>
                     <span className="text-lg font-bold text-gray-800 cursor-pointer" onClick={handleMonthModal}>{MONTH_NAMES[month]}</span>

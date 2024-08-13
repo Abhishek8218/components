@@ -1,3 +1,5 @@
+'use cleint'
+
 import React, { useRef, useEffect } from 'react';
 import { MaterialSymbol } from 'react-material-symbols';
 
@@ -26,6 +28,16 @@ const MobileYearModal = ({
       }
     }
   }, [showYearModal, year]);
+  
+  useEffect(() => {
+    // Disable scrolling on the background
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      // Re-enable scrolling when the modal is closed
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
 
   return (
     <div className={`fixed inset-0 flex items-center justify-center z-50 ${showYearModal ? '' : 'hidden'}`}>

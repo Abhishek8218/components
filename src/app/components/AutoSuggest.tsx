@@ -1,4 +1,5 @@
 import React, { forwardRef, useState, useImperativeHandle, ChangeEvent, useEffect, useRef } from 'react';
+import { MaterialSymbol } from 'react-material-symbols';
 
 type SearchBarProps = {
   suggestions: string[];
@@ -111,9 +112,10 @@ const SearchBar = forwardRef<SearchBarHandle, SearchBarProps>(
           type="text"
           value={query}
           onChange={handleChange}
-          className="w-[350px] px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+          className="w-[350px] flex gap-10 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
           placeholder="Search..."
         />
+       {query && <div className="absolute right-28 top-0 flex flex-row gap-1 p-2"><MaterialSymbol icon='close' size={24} color='#B4B4B8' onClick={() => setQuery('')}/><span className=' text-[#B4B4B8]'>|</span><MaterialSymbol icon='search' size={24} color='#B4B4B8'/></div>} 
         {error && <div className="text-sm text-red-500 mt-1">{error}</div>}
         {showSuggestions && (
           <ul className="absolute max-h-[300px] overflow-y-scroll overflow-x-hidden w-[350px] mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
