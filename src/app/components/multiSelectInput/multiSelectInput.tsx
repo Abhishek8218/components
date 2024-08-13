@@ -152,7 +152,7 @@ const MultiSelectSearchBar = forwardRef<HTMLDivElement, SearchBarProps>(
                   className="ml-2 text-sm text-blue-500 rounded-lg"
                   onClick={handleCreateNew}
                 >
-                  Create "{query}"
+                  Create &quot;{query}&quot;
                 </button>
               </li>
           </ul>

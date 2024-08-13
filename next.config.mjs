@@ -3,6 +3,7 @@ const nextConfig = {
     images: {
         domains: ['cdn-icons-png.flaticon.com', 'grandeurnet.com','unpkg.com','maps.google.com','upload.wikimedia.org','images.unsplash.com'],
       },
+      output: 'export',
 };
 
 export default nextConfig;
