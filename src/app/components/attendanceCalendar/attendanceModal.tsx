@@ -57,7 +57,7 @@ const AttendanceCalModal = ({
     <div className="fixed bottom-0 inset-0 flex items-center justify-center z-50">
       <div className="fixed inset-0 bg-gray-600 bg-opacity-80"></div>
       <div className="bg-white rounded-lg shadow relative z-1 w-[354px] h-[528px] min-h-full min-w-full">
-        <div className="grid grid-cols-5 -mx-1 min-h-[375px] mt-10">
+        <div className="grid grid-cols-5 -mx-1 min-h-[375px] ">
           {noOfDays.map((date, index) => {
             const dayName = getDayName(date);
             const isSunday = dayName === "Sun";
