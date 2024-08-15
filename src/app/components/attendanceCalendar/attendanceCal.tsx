@@ -1,9 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from "react";
-import { MaterialSymbol } from "react-material-symbols";
-import { set } from "date-fns";
-import { se } from "date-fns/locale";
 import AttendanceCalModal from "./attendanceModal";
 
 interface DatesByMonth {
@@ -17,7 +14,6 @@ const DatePicker = () => {
   const [month, setMonth] = useState<number>(new Date().getMonth());
   const [year, setYear] = useState<number>(new Date().getFullYear());
   const [noOfDays, setNoOfDays] = useState<number[]>([]);
-  const [blankDays, setBlankDays] = useState<number[]>([]);
   const [selectedDate, setSelectedDate] = useState<number>(
     new Date().getDate()
   );
@@ -26,23 +22,21 @@ const DatePicker = () => {
 
 
   // Banned and important dates mapped by month (0-based index for months)
-  const bannedDatesByMonth: DatesByMonth = {
-    0: [2, 5, 7, 8], 
-        7: [2, 4, 5, 7], 
+  const HolidaysByMonth: DatesByMonth = {
     
   };
 
-  const importantDatesByMonth: DatesByMonth = {
+  const attendanceByMonth: DatesByMonth = {
     0: [1, 10, 15], 
-    7: [3, 12, 18], 
+    7: [2,3,4,5,6,7,8,9,10, 12,13,14,15, 18], 
    
   };
 
 
    // Utility functions to check if a date is today, banned, or important
   const isToday = (date: number) => new Date().toDateString() === new Date(year, month, date).toDateString();
-  const isBanned = (date: number) => bannedDatesByMonth[month]?.includes(date) || false;
-  const isImportant = (date: number) => importantDatesByMonth[month]?.includes(date) || false;
+  const isHoliday = (date: number) => HolidaysByMonth[month]?.includes(date) || false;
+  const isAttendance = (date: number) => attendanceByMonth[month]?.includes(date) || false;
 
 
 
@@ -59,7 +53,6 @@ const DatePicker = () => {
     for (let i = 1; i <= daysInMonth; i++) {
       daysArray.push(i);
     }
-    setBlankDays(blankdaysArray);
     setNoOfDays(daysArray);
   }, [month, year]);
 
@@ -75,22 +68,10 @@ const DatePicker = () => {
 
 
 
-  // Update the selected date,Month and Year when they are clicked is clicked
-  const updateDate = (
-    selectedDate: number,
-    month: number,
-    year: number
-  ): void => {
-
-    const currentSelectedDate: Date = new Date(year, month, selectedDate);
-    setDate(formatDate(currentSelectedDate));
-  };
-
-
   // Handle clicking on a date in the date picker
   const handleDateClick = (date: number) => {
     handleActiveDate(date);
-    if (!isBanned(date)) {
+    if (!isHoliday(date)) {
       console.log("selected ", date);
       setSelectedDate(date);
       getDateValue(date);
@@ -121,41 +102,12 @@ const DatePicker = () => {
     handleActiveDate(selectedDate);
   }, [date, month, year]);
 
+//Functions to modals
 
-//Functions to handle the month and year modals
-  const handleMonthModal = () => {
-    setShowMonthModal(true);
-    setShowDatepicker(false);
-  };
+  
 
-  const handleMonthModalClose = () => {
-    setShowMonthModal(false);
-    setShowDatepicker(true);
-  };
-  const handleYearModal = () => {
-    setShowYearModal(true);
-    setShowDatepicker(false);
-  };
+ 
 
-  const handleMonthSelect = (selectedMonth: number) => {
-    setMonth(selectedMonth);
-    setShowMonthModal(false);
-    setShowDatepicker(true);
-    updateDate(selectedDate, selectedMonth, year);
-  };
-
-  const handleYearSelect = (selectedYear: number) => {
-    setYear(selectedYear);
-    setShowYearModal(false);
-    setShowDatepicker(true);
-    updateDate(selectedDate, month, selectedYear);
-  };
-
-  const handleYearModalClose = () => {
-    setShowDatepicker(true);
-    setShowYearModal(false);
-    setShowDatepicker(true);
-  };
 
   const closeModals = () => {
     setShowDatepicker(false);
@@ -221,62 +173,26 @@ const DatePicker = () => {
             <div className="mb-5 w-64">
         
               <div className="relative">
-                {/* <input type="hidden" name="date" />
-                <input
-                  type="text"
-                  readOnly
-                  value={date}
-                  onClick={() => setShowDatepicker(!showDatepicker)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Escape") setShowDatepicker(false);
-                  }}
-                  className="w-[270px] pl-4 pr-10 py-3 leading-none rounded-lg bg-gray-100 shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium"
-                  placeholder="Select date"
-                />
-
-                {date ? (<div className="absolute top-0 right-0 px-3 py-2">
-                  <MaterialSymbol icon="close" size={28} color="gray" onClick={resetDate}/>
-                </div>):(   <div
-                  className="absolute top-0 right-0 px-3 py-2"
-                  onClick={() => setShowDatepicker(!showDatepicker)}
-                >
-                  <svg
-                    className="h-6 w-6 text-gray-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                    />
-                  </svg>
-                </div>)} */}
-             
-
-
+               
                 
                     <AttendanceCalModal
                             month={month}
                       year={year}
-                      blankDays={blankDays}
+                
                       noOfDays={noOfDays}
-                      getDateValue={getDateValue}
+                     
                       isToday={isToday}
-                      isBanned={isBanned}
-                      isImportant={isImportant}
+                      isHoliday={isHoliday}
+                      isAttendance={isAttendance}
                       setMonth={setMonth}
                       setYear={setYear}
-                      handleMonthModal={handleMonthModal}
-                      handleYearModal={handleYearModal}
-                      onConfirm={closeModals}
-                      onReset={resetDate}
+                     
+                      
+                   
                       selectedate={date}
                       handleDateClick={handleDateClick}
                       SelectedDate={selectedDate}
-                      handleDatePickerClose={closeModals}
+                     
                       setcurrentDay={setCurrentDay}
                       activeDate={activeDate}
                     />
