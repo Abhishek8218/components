@@ -137,10 +137,25 @@ const DatePicker = () => {
     setShowDatepicker(true);
   };
 
-  // Function to reset the date
-  const resetDate = () => {
-    setDate("");
+// Function to handle month change
+  const handleMonthChange = (direction: 'previous' | 'next') => {
+    if (direction === 'previous') {
+      if (month === 0) {
+        setYear(year - 1);
+        setMonth(11);
+      } else {
+        setMonth(month - 1);
+      }
+    } else {
+      if (month === 11) {
+        setYear(year + 1);
+        setMonth(0);
+      } else {
+        setMonth(month + 1);
+      }
+    }
   };
+
 
   
 
@@ -186,15 +201,13 @@ const DatePicker = () => {
                       isAttendance={isAttendance}
                       setMonth={setMonth}
                       setYear={setYear}
-                     
-                      
-                   
                       selectedate={date}
                       handleDateClick={handleDateClick}
                       SelectedDate={selectedDate}
-                     
+
                       setcurrentDay={setCurrentDay}
                       activeDate={activeDate}
+                      handleMonthChange={handleMonthChange}
                     />
         
                

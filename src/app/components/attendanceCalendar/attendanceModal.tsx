@@ -19,8 +19,8 @@ interface AttendanceCalModalProps {
   handleDateClick: (date: number) => void;
   SelectedDate: number;
   activeDate: string;
-
   setcurrentDay: () => void;
+  handleMonthChange: (direction: 'previous' | 'next') => void;
 }
 
 const AttendanceCalModal = ({
@@ -31,11 +31,10 @@ const AttendanceCalModal = ({
   isToday,
   isHoliday,
   isAttendance,
-  setMonth,
-  setYear,
   handleDateClick,
   SelectedDate,
   activeDate,
+  handleMonthChange
 }: AttendanceCalModalProps) => {
   useEffect(() => {
     // Disable scrolling on the background
@@ -89,14 +88,7 @@ const AttendanceCalModal = ({
         <div className="absolute bottom-0 flex justify-between items-center w-full border-gray-200">
           <button
             className="rounded w-24 p-3 bg-gray-300 hover:scale-105 transition ease-in-out duration-100"
-            onClick={() => {
-              if (month === 0) {
-                setYear(year - 1);
-                setMonth(11);
-              } else {
-                setMonth(month - 1);
-              }
-            }}
+            onClick={() => handleMonthChange('previous')}
           >
             Previous
           </button>
@@ -110,14 +102,7 @@ const AttendanceCalModal = ({
           </div>
           <button
             className="rounded w-24 hover:scale-105 transition ease-in-out duration-100 bg-gray-300 p-3"
-            onClick={() => {
-              if (month === 11) {
-                setYear(year + 1);
-                setMonth(0);
-              } else {
-                setMonth(month + 1);
-              }
-            }}
+            onClick={() => handleMonthChange('next')}
           >
             Next
           </button>
