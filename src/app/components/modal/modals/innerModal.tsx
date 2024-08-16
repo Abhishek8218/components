@@ -1,7 +1,7 @@
 // components/modal/InnerModal.tsx
 
 import ThirdLevelModal from "./thirdModal";
-import { useModal } from "./useModalStackHook/useModal";
+import { useModal } from "../useModalStackHook/useModal";
 
 
 interface InnerModalProps {

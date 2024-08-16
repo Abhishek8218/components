@@ -7,7 +7,7 @@ import DatePicker from '../components/attendanceCalendar/attendanceCal'
 
 const page = () => {
   return (
-<DatePicker/>
+<DatePicker />
   )
 }
 

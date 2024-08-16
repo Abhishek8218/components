@@ -5,8 +5,17 @@ import AttendanceCalModal from "./attendanceModal";
 
 interface DatesByMonth {
   [key: number]: number[];
+
 }
-const DatePicker = () => {
+
+interface IDatePicker {
+  selectedMonth?: number;
+  selectedYear?: number;
+}
+
+
+
+const DatePicker = ({selectedMonth,selectedYear}:IDatePicker) => {
   const [showDatepicker, setShowDatepicker] = useState(false);
   const [showMonthModal, setShowMonthModal] = useState(false);
   const [showYearModal, setShowYearModal] = useState(false);
@@ -37,6 +46,21 @@ const DatePicker = () => {
   const isToday = (date: number) => new Date().toDateString() === new Date(year, month, date).toDateString();
   const isHoliday = (date: number) => HolidaysByMonth[month]?.includes(date) || false;
   const isAttendance = (date: number) => attendanceByMonth[month]?.includes(date) || false;
+
+
+
+  // Set the Custom month and year
+  useEffect(() => {
+    // Use selectedMonth and selectedYear if provided, otherwise use current month/year
+    const monthToSet = selectedMonth !== undefined && selectedMonth >= 1 && selectedMonth <= 12
+      ? selectedMonth - 1 // Subtract 1 since JavaScript Date months are 0-based
+      : new Date().getMonth();
+
+    const yearToSet = selectedYear || new Date().getFullYear();
+
+    setMonth(monthToSet);
+    setYear(yearToSet);
+  }, [selectedMonth, selectedYear]);
 
 
 
@@ -193,6 +217,7 @@ const DatePicker = () => {
                     <AttendanceCalModal
                             month={month}
                       year={year}
+                     
                 
                       noOfDays={noOfDays}
                      

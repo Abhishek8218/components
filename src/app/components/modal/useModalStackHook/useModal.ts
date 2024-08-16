@@ -1,7 +1,14 @@
 // hooks/useModal.ts
-import { useRecoilState } from 'recoil';
-import { modalStackState } from '../state/modalState';
+import { atom, useRecoilState } from 'recoil';
 import { useCallback, useEffect } from 'react';
+
+
+export const modalStackState = atom<string[]>({
+  key: 'modalStackState',
+  default: [],
+});
+
+
 
 export const useModal = () => {
   const [modalStack, setModalStack] = useRecoilState(modalStackState);

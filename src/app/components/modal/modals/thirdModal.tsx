@@ -1,14 +1,15 @@
-// components/modal/OuterModal.tsx
+// components/modal/InnerModal.tsx
 
-import InnerModal from './innerModal';
-import { useModal } from './useModalStackHook/useModal';
+import { useModal } from "../useModalStackHook/useModal";
 
-interface OuterModalProps {
+
+
+interface ThirdLevelModalProps {
   isOpen: boolean;
 }
 
-const OuterModal: React.FC<OuterModalProps> = ({ isOpen }) => {
-  const { openModal, closeModal, modalStack } = useModal();
+const ThirdLevelModal: React.FC<ThirdLevelModalProps> = ({ isOpen }) => {
+  const { closeModal } = useModal();
 
   if (!isOpen) return null;
 
@@ -34,18 +35,11 @@ const OuterModal: React.FC<OuterModalProps> = ({ isOpen }) => {
             />
           </svg>
         </button>
-        <h2 className="text-lg font-bold mb-4">Outer Modal Title</h2>
-        <p>This is the outer modal content.</p>
-        <button
-          onClick={() => openModal('innerModal')}
-          className="bg-green-500 text-white py-2 px-4 rounded mt-4"
-        >
-          Open Inner Modal
-        </button>
-        {modalStack.includes('innerModal') && <InnerModal isOpen={modalStack.includes('innerModal')} />}
+        <h2 className="text-lg font-bold mb-4">Third Level Modal Title</h2>
+        <p>This is the third level modal content.</p>
       </div>
     </div>
   );
 };
 
-export default OuterModal;
+export default ThirdLevelModal;

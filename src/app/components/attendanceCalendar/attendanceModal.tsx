@@ -7,6 +7,7 @@ import { MaterialSymbol } from "react-material-symbols";
 interface AttendanceCalModalProps {
   month: number;
   year: number;
+
   selectedate: string;
   noOfDays: number[];
 
@@ -26,6 +27,7 @@ interface AttendanceCalModalProps {
 const AttendanceCalModal = ({
   month,
   year,
+
   selectedate,
   noOfDays,
   isToday,

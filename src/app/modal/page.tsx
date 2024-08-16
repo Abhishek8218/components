@@ -2,9 +2,8 @@
 
 
 import { useRecoilValue } from "recoil";
-import { modalStackState } from "../components/modal/state/modalState";
-import OuterModal from "../components/modal/outModal";
-import { useModal } from "../components/modal/useModalStackHook/useModal";
+import OuterModal from "../components/modal/modals/outModal";
+import { useModal,modalStackState } from "../components/modal/useModalStackHook/useModal";
 
 export default function Home() {
   const modalStack = useRecoilValue(modalStackState);
