@@ -47,7 +47,7 @@ const YearModal= ({
             key={yearOption}
             data-year={yearOption}
             onClick={() => handleYearSelect(yearOption)}
-            className={`m-1 px-2 py-1 rounded-lg transition text-sm duration-200 text-center ${yearOption === year ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}
+            className={`m-1 px-2 py-1 rounded-lg transition text-sm duration-200 text-center hover:cursor-pointer ${yearOption === year ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}
           >
             {yearOption}
           </p>
