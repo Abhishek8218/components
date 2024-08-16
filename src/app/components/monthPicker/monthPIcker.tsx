@@ -75,7 +75,7 @@ const MonthPicker = () => {
           onClick={closeModals}
         />
       )}
-      <div className="flex items-center justify-center relative z-50 ">
+      <div className="flex items-center justify-center relative ">
         <div className="antialiased sans-serif">
           <div className="container mx-auto px-4 py-2 md:py-10">
             <div className="mb-5 w-64">

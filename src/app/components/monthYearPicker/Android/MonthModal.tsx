@@ -32,7 +32,7 @@ const MobileMonthModal= ({
  return (
 
 
-  <div className={`fixed inset-0 flex items-center justify-center z-50 px-10 ${showMonthModal ? '' : 'hidden'}`}>
+  <div className={`fixed inset-0 flex items-center justify-center z-[60] px-10 ${showMonthModal ? '' : 'hidden'}`}>
     <div className="fixed inset-0 bg-opacity-60"></div> 
     <div className="bg-white rounded-lg shadow p-4 relative z-1  w-[354px] h-[528px] min-h-[528px] min-w-[354px] max-h-[528px] max-w-[354px]">
 

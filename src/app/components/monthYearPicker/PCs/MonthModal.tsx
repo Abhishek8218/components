@@ -17,7 +17,7 @@ const MonthModal = ({
   handleMonthModalClose,
   setCurrentMonth
 }:MonthModalProps) => (
-  <div className={` inset-0 flex items-center justify-center max-w-[272px] max-h-[335px]  ml-4 mt-2 ${showMonthModal ? '' : 'hidden'}`}>
+  <div className={` inset-0 flex items-center justify-center max-w-[272px] max-h-[335px]  ml-4 mt-2 z-[60] ${showMonthModal ? '' : 'hidden'}`}>
     <div className="inset-0  bg-opacity-50" onClick={handleMonthModalClose}></div>
     <div className="bg-white shadow rounded-lg min-w-[272px] h-[335px] p-4 relative">
       <div className='w-full flex flex-row flex-nowrap justify-between mb-4'>
