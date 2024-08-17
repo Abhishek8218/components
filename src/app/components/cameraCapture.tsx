@@ -60,11 +60,11 @@ const CameraCapture: React.FC = () => {
       {cameraError && <p className="text-red-500">{cameraError}</p>}
       {!capturedImage ? (
         <>
-          <video ref={videoRef} className="w-full h-auto bg-black rounded-md"></video>
+          <video ref={videoRef} className="w-full h-[450px] bg-gray-500 rounded-md"></video>
           <canvas ref={canvasRef} className="hidden"></canvas>
 
           <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center pointer-events-none">
-            <div className="border-4 border-red-500 w-3/4 h-3/4 md:w-2/4 md:h-2/4"></div>
+            <div className="border-4 border-green-500 w-3/4 h-[250px] md:w-3/4 md:h-2/4 mt-20"></div>
           </div>
 
           <button 
