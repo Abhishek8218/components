@@ -57,7 +57,7 @@ const CameraCapture: React.FC = () => {
 
         // Define the border size you want to crop to
         const borderWidth = videoWidth * 0.80; // 3/4th of the video width
-        const borderHeight = 380; // Fixed height of 200px
+        const borderHeight = 320; // Fixed height of 200px
 
         // Calculate cropping dimensions based on border size
         const cropX = (videoWidth - borderWidth) / 2; // Center horizontally
@@ -73,7 +73,7 @@ const CameraCapture: React.FC = () => {
           cropX,
           cropY,
           borderWidth,
-          380,
+          250,
           0,
           0,
           borderWidth,
@@ -116,8 +116,8 @@ const CameraCapture: React.FC = () => {
         </>
       ) : (
         <>
-          <div className="w-3/4 flex justify-center items-center h-auto border-4 border-green-500 rounded-md md:w-2/4">
-            <img src={capturedImage} alt="Captured" />
+          <div className="object-contain   border-2 border-green-300">
+            <img src={capturedImage} alt="Captured" className='object-contain max-h-[200px]   ' />
           </div>
           <button onClick={resetCapture} className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">
             Retake
