@@ -1,16 +1,27 @@
 'use client';
 
+import { set } from 'date-fns';
 import React, { useRef, useEffect, useState } from 'react';
 
-const CameraCapture: React.FC = () => {
+type CameraCaptureProps = {
+  Customshape: 'rectangle' | 'square' | 'circle' | 'oval';
+};
+
+
+
+
+const CameraCapture: React.FC<CameraCaptureProps> = ({ Customshape }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [cameraError, setCameraError] = useState<string | null>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
-
+  const [shape, setShape] = useState<CameraCaptureProps['Customshape']>('rectangle');
+  const [isUploading, setIsUploading] = useState<boolean>(false);
+const [Uplaoded, setUplaoded] = useState<boolean>(false);
   useEffect(() => {
     const startCamera = async () => {
+      setShape(Customshape);
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
           video: { facingMode: 'environment' },
@@ -18,6 +29,7 @@ const CameraCapture: React.FC = () => {
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
           videoRef.current.play();
+          videoRef.current.autofocus = true;
         }
         setStream(stream);
       } catch (err) {
@@ -26,16 +38,92 @@ const CameraCapture: React.FC = () => {
     };
 
     startCamera();
+    setUplaoded(false);
 
     return () => {
       if (stream) {
         stream.getTracks().forEach((track) => track.stop());
       }
     };
-  }, []);
+  }, [Customshape]);
 
+  const captureImage = () => {
+    const canvas = canvasRef.current;
+    const video = videoRef.current;
+  
+    if (canvas && video) {
+      const context = canvas.getContext('2d');
+      if (context) {
+        const { videoWidth, videoHeight } = video;
+  
+        let shapeWidth: number;
+        let shapeHeight: number;
+        let shapeX: number;
+        let shapeY: number;
+  
+        if (shape === 'circle') {
+          shapeWidth = shapeHeight = Math.min(videoWidth, videoHeight) * 0.7;
+          shapeX = (videoWidth - shapeWidth) / 1.9;
+          shapeY = (videoHeight - shapeHeight) / 1.7;
+        } else if (shape === 'square') {
+          shapeWidth = shapeHeight = Math.min(videoWidth, videoHeight) * 0.5;
+          shapeX = (videoWidth - shapeWidth) / 2;
+          shapeY = (videoHeight - shapeHeight) / 1.70;
+        } else if (shape === 'oval') {
+          shapeWidth = Math.min(videoWidth, videoHeight) * 0.5;
+          shapeHeight = shapeWidth * 1.5;
+          shapeX = (videoWidth - shapeWidth) / 2;
+          shapeY = (videoHeight - shapeHeight) / 1.6;
+        } else {
+          shapeWidth = videoWidth * 0.7;
+          shapeHeight = shapeWidth * 0.65;
+          shapeX = (videoWidth - shapeWidth) / 2;
+          shapeY = (videoHeight - shapeHeight) / 1.70;
+        }
+  
+        canvas.width = shapeWidth;
+        canvas.height = shapeHeight;
+  
+        context.drawImage(video, shapeX, shapeY, shapeWidth, shapeHeight, 0, 0, shapeWidth, shapeHeight);
+  
+        const croppedCanvas = document.createElement('canvas');
+        const croppedContext = croppedCanvas.getContext('2d')!;
+        croppedCanvas.width = shapeWidth;
+        croppedCanvas.height = shapeHeight;
+  
+        croppedContext.drawImage(
+          canvas,
+          0,
+          0,
+          shapeWidth,
+          shapeHeight,
+          0,
+          0,
+          shapeWidth,
+          shapeHeight
+        );
+  
+        const croppedImage = croppedCanvas.toDataURL('image/png');
+        setCapturedImage(croppedImage);
+      }
+    }
+  };
+  
+  const handleShape = () => {
+    if (shape === 'rectangle') {
+      setShape('square');
+    } else if (shape === 'square') {
+      setShape('circle');
+    } else if (shape === 'circle') {
+      setShape('oval');
+    } else {
+      setShape('rectangle');
+    }
+  }
+  
   const startCamera = async () => {
     try {
+      setUplaoded(false);
       const newStream = await navigator.mediaDevices.getUserMedia({
         video: { facingMode: 'environment' },
       });
@@ -49,47 +137,6 @@ const CameraCapture: React.FC = () => {
     }
   };
 
-  const takePicture = () => {
-    if (videoRef.current && canvasRef.current) {
-      const context = canvasRef.current.getContext('2d');
-      if (context) {
-        const { videoWidth, videoHeight } = videoRef.current;
-
-        // Define the border size you want to crop to
-        const borderWidth = videoWidth * 0.80;
-        console.log("border ", borderWidth) // 3/4th of the video width
-        const borderHeight = 300; 
-
-        // Calculate cropping dimensions based on border size
-        const cropX = (videoWidth - borderWidth) / 2; // Center horizontally
-        const cropY = (videoHeight - borderHeight) / 2; // Center vertically
-
-        // Set canvas dimensions to match the border size
-        canvasRef.current.width = borderWidth;
-        canvasRef.current.height = borderHeight;
-
-        // Draw the image from the video feed to the canvas, ensuring correct scaling
-        context.drawImage(
-          videoRef.current,
-          cropX,
-          cropY,
-          borderWidth,
-          250,
-          0,
-          0,
-          borderWidth,
-          borderHeight
-        );
-
-        // Get the cropped image data URL
-        const imageUrl = canvasRef.current.toDataURL('image/png');
-
-        // Update the state with the captured image URL
-        setCapturedImage(imageUrl);
-      }
-    }
-  };
-
   const resetCapture = () => {
     setCapturedImage(null);
     setCameraError(null);
@@ -99,32 +146,83 @@ const CameraCapture: React.FC = () => {
     startCamera();
   };
 
+  const mockUploadImage = async () => {
+    return new Promise((resolve) => { 
+      setTimeout(resolve, 5000)
+
+    });
+    
+  };
+
+  const uploadImage = async () => {
+    if (capturedImage) {
+      setIsUploading(true);
+      console.log('Uploading image...');
+      try {
+        await mockUploadImage();
+        setUplaoded(true);
+        console.log('Image uploaded successfully');
+      } catch (error) {
+        console.error('Error uploading image:', error);
+      } finally {
+        setIsUploading(false);
+        console.log('Upload complete');
+
+      }
+    }
+  };
+  const saveImage = async () => {
+    setIsUploading(true);
+    setUplaoded(false);
+    // Simulate API upload
+    setTimeout(() => {
+      setIsUploading(false);
+      setUplaoded(true);
+      // Here you would handle the real API upload
+    }, 3000); // Simulate a 3-second upload
+  };
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-800 p-4">
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-800 w-full relative">
       {cameraError && <p className="text-red-500">{cameraError}</p>}
       {!capturedImage ? (
         <>
           <video ref={videoRef} className="w-full h-auto bg-gray-500 rounded-md"></video>
-          <canvas ref={canvasRef} className="hidden "></canvas>
+          <canvas ref={canvasRef} className="hidden"></canvas>
 
-          <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center pointer-events-none">
-            <div className="border-4 border-green-500 w-3/4 h-[200px] md:w-3/4 md:h-2/4 mt-[-50px]"></div>
+          <div className="absolute top-0 left-0 bottom-0 w-full h-full flex justify-center items-center pointer-events-none">
+            {shape === 'rectangle' && <div className="border-4 border-green-500 w-3/4 h-[190px] rounded-lg"></div>}
+            {shape === 'square' && <div className="border-4 border-green-500 w-2/4 h-1/4"></div>}
+            {shape === 'circle' && <div className="border-4 border-green-500 rounded-full w-[250px] h-[250px]"></div>}
+            {shape === 'oval' && <div className="border-4 border-green-500 w-[200px] h-[300px] rounded-[50%]"></div>}
           </div>
 
-          <button onClick={takePicture} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg">
+          <button onClick={captureImage} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg">
             Capture
+          </button>
+          <button className="mt-4 px-4 py-2 bg-green-500 text-white rounded-lg" onClick={handleShape}>
+            Change Shape
           </button>
         </>
       ) : (
-        <>
-          <div className="">
-            <img src={capturedImage} alt="Captured" className='object-contain max-h-[60vw]   min-h-[60vw] border-2 bg-black border-green-400' />
+        <> 
+        <div className={`relative flex justify-center items-center  `}>
+        <div className="">
+              <img
+                src={capturedImage}
+                alt="Captured"
+                className={`object-contain ${shape === 'circle' ? 'rounded-full' : shape === 'oval' ? 'rounded-[50%]' : shape === 'square' ? 'rounded-lg' : ''}   ${isUploading ? 'image-container' : " "} ${Uplaoded ? "border-4 border-green-400" : "border-4 border-white "}`}
+              />
+            </div>
           </div>
           <button onClick={resetCapture} className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">
             Retake
           </button>
+          <button onClick={saveImage} className="mt-4 px-4 py-2 bg-green-500 text-white rounded-lg">
+            Save
+          </button>
         </>
       )}
+
     </div>
   );
 };

@@ -117,3 +117,40 @@ input[type=number] {
   width: 100%;
   height: 100%;
 }
+
+
+
+
+
+/* styles.css */
+
+/* Custome border animation for image upload */
+/* Define the dimensions and colors */
+@property --border-angle {
+  inherits: false;
+  initial-value: 0deg;
+  syntax: '<angle>';
+}  
+:root {
+  --border-angle: 0deg;
+}
+
+/* Animated Gradient Border */
+@keyframes borderAnimation {
+  0% {
+    --border-angle: 0deg;
+  }
+  100% {
+    --border-angle: 360deg;
+  }
+}
+
+.image-container {
+  background: linear-gradient(45deg, #4caf50, #388e3c 50%, #66bb6a) padding-box,
+  conic-gradient(from var(--border-angle), rgba(56, 142, 60, 0.48) 80%, rgba(76, 175, 80, 0.86) 86%, rgba(139, 195, 74, 0.9) 90%, rgba(76, 175, 80, 0.94) 94%, rgba(56, 142, 60, 0.48)) border-box;
+border: 3px solid transparent;
+  border: 3px solid transparent;
+  overflow: hidden;
+  animation: borderAnimation 2s infinite linear;
+}
+
