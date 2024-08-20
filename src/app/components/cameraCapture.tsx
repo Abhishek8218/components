@@ -1,6 +1,5 @@
 'use client';
 
-import { set } from 'date-fns';
 import React, { useRef, useEffect, useState } from 'react';
 
 type CameraCaptureProps = {
@@ -62,23 +61,23 @@ const [Uplaoded, setUplaoded] = useState<boolean>(false);
         let shapeY: number;
   
         if (shape === 'circle') {
-          shapeWidth = shapeHeight = Math.min(videoWidth, videoHeight) * 0.7;
-          shapeX = (videoWidth - shapeWidth) / 1.9;
-          shapeY = (videoHeight - shapeHeight) / 1.7;
+          shapeWidth = shapeHeight = Math.min(videoWidth, videoHeight) * 0.6;
+          shapeX = (videoWidth - shapeWidth) / 2.1;
+          shapeY = (videoHeight - shapeHeight) / 1.45;
         } else if (shape === 'square') {
           shapeWidth = shapeHeight = Math.min(videoWidth, videoHeight) * 0.5;
-          shapeX = (videoWidth - shapeWidth) / 2;
-          shapeY = (videoHeight - shapeHeight) / 1.70;
+          shapeX = (videoWidth - shapeWidth) /2;
+          shapeY = (videoHeight - shapeHeight) / 1.50;
         } else if (shape === 'oval') {
           shapeWidth = Math.min(videoWidth, videoHeight) * 0.5;
           shapeHeight = shapeWidth * 1.5;
           shapeX = (videoWidth - shapeWidth) / 2;
-          shapeY = (videoHeight - shapeHeight) / 1.6;
+          shapeY = (videoHeight - shapeHeight) / 1.35;
         } else {
           shapeWidth = videoWidth * 0.7;
           shapeHeight = shapeWidth * 0.65;
-          shapeX = (videoWidth - shapeWidth) / 2;
-          shapeY = (videoHeight - shapeHeight) / 1.70;
+          shapeX = (videoWidth - shapeWidth) / 2.1;
+          shapeY = (videoHeight - shapeHeight) / 1.50;
         }
   
         canvas.width = shapeWidth;
@@ -191,7 +190,7 @@ const [Uplaoded, setUplaoded] = useState<boolean>(false);
 
           <div className="absolute top-0 left-0 bottom-0 w-full h-full flex justify-center items-center pointer-events-none">
             {shape === 'rectangle' && <div className="border-4 border-green-500 w-3/4 h-[190px] rounded-lg"></div>}
-            {shape === 'square' && <div className="border-4 border-green-500 w-2/4 h-1/4"></div>}
+            {shape === 'square' && <div className="border-4 border-green-500 w-2/4 h-1/4 rounded-lg"></div>}
             {shape === 'circle' && <div className="border-4 border-green-500 rounded-full w-[250px] h-[250px]"></div>}
             {shape === 'oval' && <div className="border-4 border-green-500 w-[200px] h-[300px] rounded-[50%]"></div>}
           </div>
