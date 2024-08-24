@@ -13,21 +13,24 @@ const schema = yup.object().shape({
 }).required();
 
 const ReactForm = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema) });
+  const { register, handleSubmit, formState: { errors , } } = useForm({
+     resolver: yupResolver(schema) });
 const queryClient = useQueryClient();
 
   const saveToLocalStorage = async (data: any) => {
     const existingData = JSON.parse(localStorage.getItem('formData') || '[]');
     const updatedData = [...existingData, data];
     localStorage.setItem('formData', JSON.stringify(updatedData));
-    return data;
+    return data;                                                                           
   };
 
-const {mutate,isError,isPending,isSuccess} = useMutation({mutationFn: saveToLocalStorage, onSuccess:() =>{  queryClient.invalidateQueries({queryKey: ["formData"]}) }})
+const {mutate: updateForm,isError,isPending,isSuccess} = useMutation({mutationFn: saveToLocalStorage,  onSuccess: () => {
+  queryClient.invalidateQueries({ queryKey: ["formData"] });
+}})
 
 
   const onSubmit = (formData:any) => {
-    return mutate(formData);
+    return updateForm(formData);
   }
 
 if(isPending) return <div>Loading...</div>

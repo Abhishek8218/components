@@ -154,3 +154,15 @@ border: 3px solid transparent;
   animation: borderAnimation 2s infinite linear;
 }
 
+
+
+
+@media (max-width: 768px) {
+  .zoom-04 {
+    transform: scale(0.4); /* Scale down the body to 40% */
+    transform-origin: top left; /* Ensure the scaling starts from the top left corner */
+    width: 250%; /* Compensate for the scale to keep the content visible */
+    height: 250%;
+    overflow: hidden; /* Prevent overflow */
+  }
+  }

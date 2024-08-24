@@ -11,6 +11,17 @@ import Image from 'next/image';
 import { fetchHouses, fetchProfile, fetchBlog, House, BlogInfo, Profile } from '../components/fetchData';
 
 const Page = () => {
+
+  useEffect(() => {
+    // Add the zoom class to the body element
+    document.body.classList.add('zoom-04');
+    
+    // Clean up the class when the component unmounts
+    return () => {
+      document.body.classList.remove('zoom-04');
+    };
+  }, []);
+
   const [houses, setHouses] = useState<House[]>([]);
   const [blogInfo, setBlogInfo] = useState<BlogInfo[]>([]);
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -106,7 +117,7 @@ const Page = () => {
           )}
         </div>
 
-        <div className='flex flex-col print:flex-row  md:flex-row justify-center items-center print:gap-2 print:ml-0 md:gap-6  xl:ml-[-20px] lg:pl-[220px] '>
+        <div className='flex gap-5 print:flex-row  md:flex-row justify-center items-center print:gap-2 print:ml-0 md:gap-6  xl:ml-[-20px] lg:pl-[220px] '>
           <div className=''>
             <h1 className='text-xl font-bold text-center print:text-left print:ml-6  md:text-left mt-5 print:mt-5'>Lagna Chakra</h1>
             {error ? (

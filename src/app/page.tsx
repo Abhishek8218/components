@@ -117,6 +117,13 @@ const Home = () => {
   const handleRated = (newRating: number) => {
     console.log(`The new rating is: ${newRating}`);
   };
+
+
+
+
+
+
+
   const fetchFromLocalStorage = async () => {
     const data = JSON.parse(localStorage.getItem('formData') || '[]');
     return data;
@@ -124,6 +131,9 @@ const Home = () => {
   const { data, isLoading, isError } = useQuery({queryKey:['formData'], queryFn: fetchFromLocalStorage});
 
 
+
+
+  
 
   const [selectedValue, setSelectedValue] = useState<string>('');
   const [multiSelectInputValue, setMultiSelectInputValue] = useState<string>('');
@@ -210,6 +220,9 @@ const Home = () => {
 
 <TimeSelector onChange={handleTimeChange}/>
 <div className='mt-[500px]'>h</div>
+
+
+<ReactForm/>
 
 
 
