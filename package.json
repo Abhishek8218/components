@@ -1,7 +1,9 @@
 {
-  "name": "components",
+  "name": "reusable-components",
+  "author": {
+    "name": "Abhishek Kumar",
+    "email": "ak3037308@gmail.com"},
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
