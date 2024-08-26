@@ -35,11 +35,22 @@ if(value.length > 10){
       }
     };
 
+
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        // Allow only numeric input, Backspace, Delete, Arrow keys, and Tab
+        const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
+        if (!/[0-9]/.test(event.key) && !allowedKeys.includes(event.key)) {
+          event.preventDefault();
+        }
+      };
+
     return (
       <input
         type="tel"
         ref={ref}
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
         {...props}
         className="p-2 border rounded" // Example Tailwind CSS styles
       />
