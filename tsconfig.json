@@ -3,10 +3,12 @@
     "lib": ["dom", "dom.iterable", "esnext","es6"],
     "allowJs": true,
     "skipLibCheck": true,
+  
+"rootDir": "", // Location of source files
     "strict": true,
     "esModuleInterop": true,
     "noEmit": false,  // Allow emitting compiled JavaScript files
-    "outDir": "./dist",  // Output directory for compiled files
+    "outDir": "./dist", // Output directory for compiled files // Location of source files
     "declaration": true,  // Generate .d.ts files for TypeScript definitions
     "declarationMap": true,  // Generates source maps for declaration files
    

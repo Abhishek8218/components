@@ -1,9 +1,15 @@
 {
-  "name": "reusable-components",
+  "name": "nextjs-ui-components",
   "author": {
     "name": "Abhishek Kumar",
     "email": "ak3037308@gmail.com"},
-  "version": "0.1.0",
+  "version": "0.1.3",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/src/app/index.js",
+ "./*": "./*" 
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

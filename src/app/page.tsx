@@ -17,7 +17,7 @@ import {
 import SearchBar from './components/AutoSuggest';
 import ForwardedTextInput from './components/Input';
 import Input from './components/Input';
-import DatePicker from './components/DatePicker/DatePIcker';
+//import DatePicker from './components/DatePicker/DatePIcker';
 import TimePicker from './components/TimePicker/TimePicker';
 import DateRangePicker from './components/DateRangeSelector/RangeSelector';
 import EventCalendar from './components/eventCalendar/eventCalendar';
@@ -25,7 +25,8 @@ import MultiSelectSearchBar from './components/multiSelectInput/multiSelectInput
 import MultiSelectDropdown from './components/multiSelectCheckBoxInput/multiSelectCheckBoxInput';
 import SingleSelectDropdown from './components/singleSelectInput/singleSelectInput';
 import TimeSelector from './components/TimeSelector/TimeSelector';
-
+import {DatePicker} from "nextjs-ui-components";
+import MobileInput from './components/mobileInput';
 
 export interface House {
   title: string;
@@ -172,6 +173,11 @@ const Home = () => {
   const handleTimeChange = (time: string) => {
     console.log('Selected Time:', time);
   };
+
+
+  const handleMobile = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.value);
+  }
   
   return (
     <div className="flex flex-col justify-center items-center gap-16">
@@ -223,6 +229,11 @@ const Home = () => {
 
 
 <ReactForm/>
+
+
+<MobileInput onChange={handleMobile}/>
+
+<DatePicker/>
 
 
 

@@ -1,0 +1,1 @@
+{"version":3,"file":"singleSelectInput.d.ts","sourceRoot":"","sources":["../../../../../src/app/components/singleSelectInput/singleSelectInput.tsx"],"names":[],"mappings":"AACA,OAAO,KAAkD,MAAM,OAAO,CAAC;AAEvE,KAAK,cAAc,GAAG;IACpB,OAAO,EAAE,MAAM,EAAE,CAAC;IAClB,QAAQ,EAAE,CAAC,KAAK,EAAE,MAAM,KAAK,IAAI,CAAC;CACnC,CAAC;AAEF,QAAA,MAAM,oBAAoB,uFAsFzB,CAAC;AAIF,eAAe,oBAAoB,CAAC"}

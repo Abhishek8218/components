@@ -1,0 +1,1 @@
+{"version":3,"file":"PopupModel.d.ts","sourceRoot":"","sources":["../../../src/app/components/PopupModel.tsx"],"names":[],"mappings":"AAAA,OAAO,KAAK,MAAM,OAAO,CAAC;AAE1B,UAAU,UAAU;IAClB,MAAM,EAAE,OAAO,CAAC;IAChB,OAAO,EAAE,MAAM,IAAI,CAAC;IACpB,WAAW,EAAE,MAAM,IAAI,CAAC;CACzB;AAED,QAAA,MAAM,KAAK,EAAE,KAAK,CAAC,EAAE,CAAC,UAAU,CAyB/B,CAAC;AAEF,eAAe,KAAK,CAAC"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"RecoilProvider.d.ts","sourceRoot":"","sources":["../../../src/app/providers/RecoilProvider.tsx"],"names":[],"mappings":"AACA,OAAO,KAAK,MAAM,OAAO,CAAC;AAE1B,QAAA,MAAM,qBAAqB,iBAAkB;IAAE,QAAQ,EAAE,KAAK,CAAC,SAAS,CAAA;CAAE,sBAEzE,CAAC;AACF,eAAe,qBAAqB,CAAC"}
