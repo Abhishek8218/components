@@ -1,4 +1,4 @@
-import React, { forwardRef, Ref, ChangeEvent, useRef } from 'react';
+import React, { forwardRef, Ref, ChangeEvent, useState } from 'react';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -6,27 +6,26 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const MobileInput = forwardRef(
   ({ onChange, ...props }: InputProps, ref: Ref<HTMLInputElement>) => {
+    const [value, setValue] = useState<string>('');
+
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-      let value = event.target.value;
+      let newValue = event.target.value;
 
-      // Remove any country code (e.g., +91) by removing any non-digit characters
+      // Clean up the input value
+      newValue = newValue.replace(/^\+\d{1,2}/, ''); // Remove any country code
+      newValue = newValue.replace(/\D+/g, '').trim(); // Remove all non-numeric characters
 
-        //   // Check if the value starts with + followed by 1 or 2 digits
-          if (event.target.value.startsWith('+')) {
-            value = event.target.value.replace(/^\+\d{1,2}/, '');
-          }
+      // Ensure the value length is limited to 10 characters
+      if (newValue.length > 10) {
+        newValue = newValue.slice(-10);
+      }
 
-if(value.length > 10){
-        value = value.slice(-10);
-}
-
-      // Remove all non-numeric characters and additional spaces
-      value = value.replace(/\D+/g, '').trim();
+      setValue(newValue); // Update the internal state with the cleaned value
 
       // Create a synthetic event to pass the cleaned value to the parent component
       const syntheticEvent = {
         ...event,
-        target: { ...event.target, value },
+        target: { ...event.target, value: newValue },
       };
 
       if (onChange) {
@@ -34,22 +33,39 @@ if(value.length > 10){
       }
     };
 
+    const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+      // Prevent the default paste behavior
+      event.preventDefault();
 
+      // Get the pasted text and clean it up
+      const pastedText = (event.clipboardData || (window as any).Clipboard).getData('text');
+      let cleanedText = pastedText.replace(/\D+/g, '').trim();
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        // Allow only numeric input, Backspace, Delete, Arrow keys, and Tab
-        const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
-        if (!/[0-9]/.test(event.key) && !allowedKeys.includes(event.key)) {
-          event.preventDefault();
-        }
+      // Ensure the cleaned text does not exceed 10 characters
+      if (cleanedText.length > 10) {
+        cleanedText = cleanedText.slice(-10);
+      }
+
+      setValue(cleanedText); // Update the state with the cleaned text
+
+      // Create a synthetic event to pass the cleaned value to the parent component
+      const syntheticEvent = {
+        ...event,
+        target: { ...event.target, value: cleanedText },
       };
+
+      // if (onChange) {
+      //   onChange(syntheticEvent as ChangeEvent<HTMLInputElement>);
+      // }
+    };
 
     return (
       <input
         type="tel"
         ref={ref}
+        value={value}
         onChange={handleChange}
-        onKeyDown={handleKeyDown}
+        onPaste={handlePaste}
         {...props}
         className="p-2 border rounded" // Example Tailwind CSS styles
       />
@@ -57,7 +73,6 @@ if(value.length > 10){
   }
 );
 
-MobileInput.displayName = 'Input';
+MobileInput.displayName = 'MobileInput';
 
 export default MobileInput;
-
