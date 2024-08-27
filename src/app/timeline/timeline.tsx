@@ -32,7 +32,7 @@ const StepProgress: React.FC<StepProgressProps> = ({ steps, currentStep }) => {
             <div className={`relative pb-8 ${index < steps.length - 1 ? '' : 'pb-0'}`}>
               {index < steps.length - 1 && (
                 <span
-                  className={`absolute left-[0.65rem] top-[1.25rem] -ml-px h-[62%] w-0.5 z-10 ${
+                  className={`absolute left-[0.65rem] top-[1.35rem] -ml-px h-[62%] w-0.5 z-10 ${
                     index < currentStep && steps[index].status ?  'bg-green-500': 'bg-gray-200'
                   }`}
              
