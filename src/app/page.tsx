@@ -171,7 +171,7 @@ const Home = () => {
 
   const userAgent = useUserAgent();
 
-  const isMobile = /Mobi|Android/i.test(userAgent);
+  const isMobile = /Mobile|Android/i.test(userAgent);
 
   const handleTimeChange = (time: string) => {
     console.log('Selected Time:', time);
@@ -251,7 +251,7 @@ const Home = () => {
      
     },
   ];
-console.log("selected group checbox values",selectedValues)
+console.log("selected group checkbox values",selectedValues)
 
   return (
     <div className="flex flex-col justify-center items-center gap-16">
