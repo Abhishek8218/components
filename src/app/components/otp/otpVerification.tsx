@@ -1,11 +1,20 @@
+'use client'
+
+
+
 import React, { useEffect, useState, useRef, forwardRef } from 'react';
 
 // Local Storage Hook
 function useLocalStorage<T>(key: string, initialValue: T, parseValue: (v: string | null) => T) {
-  const [item, setValue] = useState<T>(() => {
-    const value = parseValue(localStorage.getItem(key));
-    return value || initialValue;
-  });
+  const [item, setValue] = useState<T>(initialValue);
+
+  useEffect(() => {
+    // Check if we're in the browser environment
+    if (typeof window !== 'undefined') {
+      const value = parseValue(localStorage.getItem(key));
+      setValue(value || initialValue);
+    }
+  }, [key, initialValue, parseValue]);
 
   const setItem = (newValue: T) => {
     setValue(newValue);
