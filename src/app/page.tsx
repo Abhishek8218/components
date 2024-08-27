@@ -28,6 +28,7 @@ import TimeSelector from './components/TimeSelector/TimeSelector';
 import {DatePicker} from "nextjs-ui-components";
 import MobileInput from './components/mobileInput';
 import CheckboxGroup from './components/groupCheckBox/checkBoxGroup';
+import OTPVerification from './components/otp/otpVerification';
 // import { OTPInput } from './components/otp/otpVerification';
 
 
@@ -255,6 +256,13 @@ console.log("selected group checkbox values",selectedValues)
 
   return (
     <div className="flex flex-col justify-center items-center gap-16">
+
+
+<OTPVerification />
+
+
+
+
  {/* <OTPInput onVerify={handleVerify} onResend={handleResend} /> */}
  <h1 className="text-xl font-semibold text-gray-800 mb-4">Select Your Options</h1>
         <CheckboxGroup options={options}  onChange={handleSelectionChange} />
