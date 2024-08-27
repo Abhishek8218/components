@@ -27,6 +27,9 @@ import SingleSelectDropdown from './components/singleSelectInput/singleSelectInp
 import TimeSelector from './components/TimeSelector/TimeSelector';
 import {DatePicker} from "nextjs-ui-components";
 import MobileInput from './components/mobileInput';
+import CheckboxGroup from './components/groupCheckBox/checkBoxGroup';
+// import { OTPInput } from './components/otp/otpVerification';
+
 
 export interface House {
   title: string;
@@ -179,8 +182,84 @@ const Home = () => {
     console.log(event.target.value);
   }
   
+
+
+
+  const handleVerify = (otp: string) => {
+    // Implement OTP verification logic here
+    console.log('Verifying OTP:', otp);
+
+    // Example: Mock verification logic
+    if (otp === '123456') {
+      alert('OTP Verified Successfully');
+    } else {
+      alert('Invalid OTP');
+    }
+  };
+
+  const handleResend = () => {
+    // Implement OTP resend logic here
+    console.log('Resending OTP');
+
+    // Example: Mock resend logic
+    // You might want to trigger an actual API call to resend the OTP
+  };
+
+
+
+
+//Group Check Box 
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+
+  const handleSelectionChange = (values: string[]) => {
+    console.log(values)
+    setSelectedValues(values);
+  };
+ 
+  const options = [
+    {
+      label: 'Option 1',
+      value: 'option1',
+      
+    },
+    {
+      label: 'Option 2',
+      value: 'option2',
+     
+    },
+    {
+      label: 'custom',
+      value: 'custom',
+     
+    },
+    {
+      label: 'Option 3',
+      value: 'option3',
+      subOptions: [
+        { label: 'Sub Option 3.1', value: 'subOption3.1' },
+        { label: 'Sub Option 3.2', value: 'subOption3.2' },
+      ],
+     
+    },
+    {
+      label: 'Option 4',
+      value: 'option4',
+      subOptions: [
+        { label: 'Sub Option 4.1', value: 'subOption4.1' },
+        { label: 'Sub Option 4.2', value: 'subOption4.2' },
+      ],
+     
+    },
+  ];
+console.log("selected group checbox values",selectedValues)
+
   return (
     <div className="flex flex-col justify-center items-center gap-16">
+ {/* <OTPInput onVerify={handleVerify} onResend={handleResend} /> */}
+ <h1 className="text-xl font-semibold text-gray-800 mb-4">Select Your Options</h1>
+        <CheckboxGroup options={options}  onChange={handleSelectionChange} />
+        <p className="mt-4 text-sm text-gray-500">Selected Values in parent : {selectedValues.join(', ')}</p>
+
       <Rating stars={1} onRated={handleRated} />
       <CartCounter maxValue={10} minValue={0} />
       {data?.map((formData: any, index: number) => (

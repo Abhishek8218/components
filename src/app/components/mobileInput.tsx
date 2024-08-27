@@ -17,7 +17,6 @@ const MobileInput = forwardRef(
           }
 
 if(value.length > 10){
-    
         value = value.slice(-10);
 }
 

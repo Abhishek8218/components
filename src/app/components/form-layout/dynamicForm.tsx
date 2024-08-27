@@ -13,15 +13,14 @@ interface DynamicFormProps {
 
 const DynamicForm: React.FC<DynamicFormProps> = ({
   children,
-  className = '',
+  
   onSubmit,
-  columns = 2, // Default to 2 columns
   columnWidth = 'col-span-1', // Default column width
-  singleColumn = false
+
 }) => {
   return (
     <form
-      className={`grid p-4 bg-white rounded-lg shadow-md `}
+      className={`grid md:w-[60%] p-4 bg-white rounded-lg shadow-md `}
       onSubmit={onSubmit}
     >
       {React.Children.map(children, (child) =>

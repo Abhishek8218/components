@@ -22,7 +22,7 @@ const FormInput: React.FC<FormInputProps> = ({
   className = ''
 }) => {
   return (
-    <div className={`flex flex-col ${className}`}>
+    <div className={` ${className}`}>
       <label htmlFor={id} className="text-gray-700 mb-2">{label}</label>
       <input
         id={id}

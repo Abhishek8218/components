@@ -1,11 +1,14 @@
 // pages/index.tsx
 'use client'
-import { useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import DynamicForm from '../components/form-layout/dynamicForm';
 import FormInput from '../components/form-layout/formInput';
 
 
+
 const Page: React.FC = () => {
+
+
     const [formValues, setFormValues] = useState({
         email: '',
         password: '',
@@ -42,11 +45,11 @@ const Page: React.FC = () => {
         <div className="flex justify-center items-center h-screen bg-gray-100">
           <DynamicForm
             onSubmit={handleSubmit}
-            columns={1} // Number of columns
-            columnWidth="col-span-1" // Default column width for each item
-            singleColumn={false} // Set to true to display in a single column
-            className="w-full max-w-4xl"
+            columns={2}
+            columnWidth="col-span-2"
+       
           >
+            <div className='grid grid-cols-2'>
             <FormInput
               id="email"
               type="email"
@@ -54,7 +57,7 @@ const Page: React.FC = () => {
               placeholder="you@example.com"
               value={formValues.email}
               onChange={handleChange}
-    className="grid-cols-6" // Span 2 columns
+    className="" // Span 2 columns
             />
             <FormInput
               id="password"
@@ -62,14 +65,15 @@ const Page: React.FC = () => {
               label="Password"
               value={formValues.password}
               onChange={handleChange}
-              className='grid-cols-6' // Span 2 columns
+    className='' // Span 2 columns
             />
+            </div>
             <FormInput
               id="address"
               label="Address"
               placeholder="1234 Main St"
               value={formValues.address}
-              className='grid-cols-6' // Span 2 columns
+              className=' grid grid-cols-6' // Span 2 columns
               onChange={handleChange}
             />
             <FormInput
