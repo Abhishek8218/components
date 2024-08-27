@@ -39,6 +39,13 @@ const App = () => {
       iconPath: React.createElement(MaterialSymbol, { icon: 'check_circle',size: 20,color: 'white' }),
       status: 'success',
     },
+    {
+        title: 'Wait outside the door',
+        description: 'This is step will be completed soon',
+        date: 'Oct 4',
+        iconPath: React.createElement(MaterialSymbol, { icon: 'check_circle',size: 20,color: 'white' }),
+        status: 'success',
+      },
   ];
 
   const currentStep = 4;
