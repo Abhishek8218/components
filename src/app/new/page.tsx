@@ -50,7 +50,13 @@ const App = () => {
 
   const currentStep = 4;
 
-  return <StepProgress steps={steps} currentStep={currentStep} />;
+  return (
+  <>
+  <StepProgress steps={steps} currentStep={1} orientation="horizontal" />
+<StepProgress steps={steps} currentStep={1} orientation="vertical" />
+
+  </>
+  )
 };
 
 export default App;

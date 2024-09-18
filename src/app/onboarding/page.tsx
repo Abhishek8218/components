@@ -146,6 +146,7 @@ if(!isTourOpen) {
         </div>
       </nav>
 
+      {/* Main content */}
       <main className="bg-gray-100 bg-opacity-25">
         <div className="lg:w-8/12 lg:mx-auto mb-8">
           <header className="flex flex-wrap items-center p-4 md:py-8">

@@ -1,3 +1,5 @@
+'use client'
+
 import React, { forwardRef, useState, useImperativeHandle, ChangeEvent, useEffect, useRef } from 'react';
 import { MaterialSymbol } from 'react-material-symbols';
 

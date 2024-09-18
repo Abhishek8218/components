@@ -137,9 +137,6 @@ const Home = () => {
 
 
 
-
-  
-
   const [selectedValue, setSelectedValue] = useState<string>('');
   const [multiSelectInputValue, setMultiSelectInputValue] = useState<string>('');
   const [singleSelectInputValue, setSingleSelectInputValue] = useState<string>('');
@@ -279,6 +276,7 @@ console.log("selected group checkbox values",selectedValues)
       <SearchBar suggestions={suggestions} onSelect={handleSelect} />
       <p className="mt-4">Selected: {selectedValue}</p>
       <Input type='text' placeholder='Enter your name' onChange={(event) => console.log(event.target.value)} />
+      
       <DatePicker/>
 
 <TimePicker/>

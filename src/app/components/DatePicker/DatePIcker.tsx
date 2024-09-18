@@ -207,9 +207,12 @@ const DatePicker = () => {
 
   const userAgent = useUserAgent();
 
-  const isMobile = /Mobi|Android/i.test(userAgent);
+  const isMobile = /Mobile|Android/i.test(userAgent);
 
   return (
+
+
+    
     <div className="relative">
       {(showDatepicker || showYearModal || showMonthModal) && (
         <div
