@@ -1,51 +1,93 @@
-// components/modal/OuterModal.tsx
+import { atom, useRecoilState } from 'recoil';
+import { useCallback, useEffect } from 'react';
 
-import InnerModal from './innerModal';
-import { useModal } from '../useModalStackHook/useModal';
+/**
+ * Atom to hold the stack of currently opened modal IDs.
+ * Each string represents a modal or bottom sheet identifier.
+ */
+export const modalStackState = atom<string[]>({
+  key: 'modalStackState',
+  default: [],
+});
 
-interface OuterModalProps {
-  isOpen: boolean;
-}
+/**
+ * useModal Hook – for managing nested modal stacks with browser history support.
+ *
+ * 🧠 Why this is needed:
+ * In web-based apps, especially SPAs, when you open nested modals or bottom sheets,
+ * the browser's back button often fails to close them in order — it might change the route
+ * while modals remain open, leading to broken or mismatched UI.
+ *
+ * ✅ This hook solves that by:
+ * - Pushing each opened modal (or bottom sheet) into browser history
+ * - Handling `popstate` events to close the modals one-by-one as the user presses back
+ * - Ensuring route changes only happen **after** all modals are closed
+ *
+ * 📱 You can use this to mimic **Android-style bottom sheet behavior** on the web:
+ * When you open a bottom sheet, pressing the back button should close it first —
+ * not change the page underneath. This hook gives you that native-like experience.
+ *
+ * 📄 See usage in:
+ * `src/app/components/modal/modals/outModal.tsx`
+ */
+export const useModal = () => {
+  const [modalStack, setModalStack] = useRecoilState(modalStackState);
 
-const OuterModal: React.FC<OuterModalProps> = ({ isOpen }) => {
-  const { openModal, closeModal, modalStack } = useModal();
+  /**
+   * Opens a modal or bottom sheet by adding its ID to the stack
+   * and syncing that state to browser history.
+   */
+  const openModal = useCallback((modalId: string) => {
+    setModalStack((prevStack) => [...prevStack, modalId]);
+    window.history.pushState({ modalId }, '', '');
+  }, [setModalStack]);
 
-  if (!isOpen) return null;
+  /**
+   * Closes the most recently opened modal or sheet.
+   * Updates the browser history to reflect the previous state.
+   */
+  const closeModal = useCallback(() => {
+    setModalStack((prevStack) => {
+      const newStack = [...prevStack];
+      newStack.pop(); // Remove the top modal
+      const previousModalId = newStack[newStack.length - 1];
+      window.history.pushState({ modalId: previousModalId || 'root' }, '', '');
+      return newStack;
+    });
+  }, [setModalStack]);
 
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg relative">
-        <button
-          onClick={closeModal}
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
-        <h2 className="text-lg font-bold mb-4">Outer Modal Title</h2>
-        <p>This is the outer modal content.</p>
-        <button
-          onClick={() => openModal('innerModal')}
-          className="bg-green-500 text-white py-2 px-4 rounded mt-4"
-        >
-          Open Inner Modal
-        </button>
-        {modalStack.includes('innerModal') && <InnerModal isOpen={modalStack.includes('innerModal')} />}
-      </div>
-    </div>
-  );
+  /**
+   * Listens to browser back/forward navigation and pops modals from stack accordingly.
+   * Makes sure only the right modal remains open.
+   */
+  const handlePopstate = useCallback((event: PopStateEvent) => {
+    if (event.state?.modalId) {
+      setModalStack((prevStack) => {
+        const newStack = [...prevStack];
+        while (newStack.length && newStack[newStack.length - 1] !== event.state.modalId) {
+          newStack.pop();
+        }
+        return newStack;
+      });
+    } else {
+      // If no modalId in state, assume we should clear all modals
+      setModalStack([]);
+    }
+  }, [setModalStack]);
+
+  /**
+   * Attach and clean up browser history listener on mount/unmount.
+   */
+  useEffect(() => {
+    window.addEventListener('popstate', handlePopstate);
+    return () => {
+      window.removeEventListener('popstate', handlePopstate);
+    };
+  }, [handlePopstate]);
+
+  return {
+    openModal,
+    closeModal,
+    modalStack,
+  };
 };
-
-export default OuterModal;
